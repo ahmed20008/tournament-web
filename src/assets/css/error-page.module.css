@@ -1,0 +1,65 @@
+.errorPageConatiner {
+  background-color: #eaeae1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 100vh;
+  padding: 30px;
+}
+.errorPageConatiner > img {
+  max-width: 400px;
+  height: auto;
+}
+.errorPageConatiner > h1 {
+  font-weight: 600;
+  line-height: 1.5;
+  margin: 0;
+  color: #1d1c1c;
+  padding-top: 30px;
+  font-size: 30px;
+}
+.errorPageConatiner > p {
+  color: #1d1c1c;
+  padding-bottom: 20px;
+  max-width: 600px;
+}
+.errorPageConatiner > a,
+.errorPageConatiner > button {
+  color: #1d1c1c;
+  background-color: #bbbbbb;
+  font-size: 0.875rem;
+  transition: all 0.15s ease;
+  letter-spacing: 0.025em;
+  font-weight: 600;
+  line-height: 1.5;
+  border-radius: 5px;
+  padding: 0.625rem 1.25rem;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .errorPageConatiner > a:hover,
+  .errorPageConatiner > button:hover {
+    color: #fff;
+    background-color: #1d1c1c;
+  }
+}
+
+@media (max-width: 767px) {
+  .errorPageConatiner > img {
+    max-width: 300px;
+  }
+  .errorPageConatiner > h1 {
+    padding-top: 25px;
+    font-size: 20px;
+  }
+  .errorPageConatiner > p {
+    padding-bottom: 15px;
+    font-size: 15px;
+  }
+}
