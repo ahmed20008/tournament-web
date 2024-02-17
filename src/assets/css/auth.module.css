@@ -1,0 +1,24 @@
+.authContainer {
+  background: #f3f3f3;
+  position: relative;
+}
+
+.authContainer > img {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+
+@media screen and (min-width: 901px) and (max-width: 1366px) {
+  .authContainer > img {
+    width: 100px;
+    height: auto;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .authContainer > img {
+    width: 90px;
+    height: auto;
+  }
+}

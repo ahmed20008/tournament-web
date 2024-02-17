@@ -1,0 +1,191 @@
+.buttonWhite {
+  height: 49px;
+  width: 100%;
+  color: #1a1a1a;
+  background-color: #fff;
+  font-family: "RomieTrial-Medium";
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  text-decoration: none;
+  text-align: center;
+  border: 1px solid #838282;
+  border-radius: 80px;
+  padding: 15px 24px;
+}
+button.buttonWhite:disabled {
+  background-color: #fdfdfd;
+  color: #838282;
+}
+a.buttonWhite[aria-disabled="true"] {
+  background-color: #fdfdfd;
+  color: #838282;
+  pointer-events: none;
+}
+
+.buttonBlack {
+  height: 49px;
+  width: 100%;
+  color: #fff;
+  background-color: #1d1c1c;
+  font-family: "RomieTrial-Medium";
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  text-decoration: none;
+  text-align: center;
+  border: none;
+  border-radius: 80px;
+  padding: 15px 24px;
+}
+button.buttonBlack:disabled {
+  background-color: #787878;
+}
+a.buttonBlack[aria-disabled="true"] {
+  background-color: #787878;
+  pointer-events: none;
+}
+
+.buttonDarkGrey {
+  height: 49px;
+  width: 100%;
+  color: #fff;
+  background-color: #3d3d3d;
+  font-family: "RomieTrial-Medium";
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  text-decoration: none;
+  text-align: center;
+  border: none;
+  border-radius: 80px;
+  padding: 15px 24px;
+}
+button.buttonDarkGrey:disabled {
+  background-color: #5f5f5f;
+}
+a.buttonDarkGrey[aria-disabled="true"] {
+  background-color: #5f5f5f;
+  pointer-events: none;
+}
+
+.buttonWhitePink {
+  height: 49px;
+  width: 100%;
+  color: #1a1a1a;
+  background-color: #fff;
+  font-family: "ABC-Diatype-Regular";
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  text-decoration: none;
+  text-align: center;
+  border: 1px solid #a4887e;
+  border-radius: 80px;
+  padding: 15px 24px;
+}
+button.buttonWhitePink:disabled {
+  background-color: #fdfdfd;
+  color: #838282;
+  border-color: #b69b91;
+}
+a.buttonWhitePink[aria-disabled="true"] {
+  background-color: #fdfdfd;
+  color: #838282;
+  pointer-events: none;
+  border-color: #b69b91;
+}
+
+.buttonDarkPink {
+  height: 49px;
+  width: 100%;
+  color: #000;
+  background-color: #a4887e;
+  font-family: "ABC-Diatype-Regular";
+  font-size: 16px;
+  font-weight: 400;
+  line-height: normal;
+  text-decoration: none;
+  text-align: center;
+  border: none;
+  border-radius: 80px;
+  padding: 15px 24px;
+}
+button.buttonDarkPink:disabled {
+  background-color: #bd9d92;
+}
+a.buttonDarkPink[aria-disabled="true"] {
+  background-color: #bd9d92;
+  pointer-events: none;
+}
+
+.buttonLightPink {
+  height: 49px;
+  width: 100%;
+  color: #1e1e1e;
+  background-color: #d4c1b9;
+  font-family: "ABC-Diatype-Regular";
+  font-size: 16px;
+  font-weight: 400;
+  line-height: normal;
+  text-decoration: none;
+  text-align: center;
+  border: none;
+  border-radius: 80px;
+  padding: 15px 24px;
+}
+button.buttonLightPink:disabled {
+  background-color: #dfbcb1;
+}
+a.buttonLightPink[aria-disabled="true"] {
+  background-color: #dfbcb1;
+  pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  a.buttonWhite:not([aria-disabled="true"]):hover {
+    border-color: #1d1c1c;
+    color: #1d1c1c;
+  }
+  button.buttonWhite:not(:disabled):hover {
+    border-color: #1d1c1c;
+    color: #1d1c1c;
+  }
+
+  a.buttonBlack:not([aria-disabled="true"]):hover {
+    background-color: #000;
+  }
+  button.buttonBlack:not(:disabled):hover {
+    background-color: #000;
+  }
+
+  a.buttonDarkGrey:not([aria-disabled="true"]):hover {
+    background-color: #2c2c2c;
+  }
+  button.buttonDarkGrey:not(:disabled):hover {
+    background-color: #2c2c2c;
+  }
+
+  a.buttonWhitePink:not([aria-disabled="true"]):hover {
+    border-bottom: #81685f;
+    color: #1d1c1c;
+  }
+  button.buttonWhitePink:not(:disabled):hover {
+    border-color: #81685f;
+    color: #1d1c1c;
+  }
+
+  a.buttonDarkPink:not([aria-disabled="true"]):hover {
+    background-color: #81685f;
+  }
+  button.buttonDarkPink:not(:disabled):hover {
+    background-color: #81685f;
+  }
+
+  a.buttonLightPink:not([aria-disabled="true"]):hover {
+    background-color: #81685f;
+  }
+  button.buttonLightPink:not(:disabled):hover {
+    background-color: #81685f;
+  }
+}

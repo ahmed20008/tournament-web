@@ -1,4 +1,4 @@
-import "./globals.css";
+import "../assets/css/globals.css";
 import "bootstrap/dist/css/bootstrap.css";
 import Script from "next/script";
 

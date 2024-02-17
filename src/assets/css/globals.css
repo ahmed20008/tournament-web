@@ -1,0 +1,116 @@
+@font-face {
+  font-family: "RomieTrial-Bold";
+  src: url(../fonts/Romie/RomieTrial-Bold.otf);
+}
+@font-face {
+  font-family: "RomieTrial-Medium";
+  src: url(../fonts/Romie/RomieTrial-Medium.otf);
+}
+@font-face {
+  font-family: "RomieTrial-Regular";
+  src: url(../fonts/Romie/RomieTrial-Regular.otf);
+}
+@font-face {
+  font-family: "ABC-Diatype-Bold";
+  src: url(../fonts/ABC-Diatype/ABCDiatype-Bold.ttf);
+}
+@font-face {
+  font-family: "ABC-Diatype-Medium";
+  src: url(../fonts/ABC-Diatype/ABCDiatype-Medium.ttf);
+}
+@font-face {
+  font-family: "ABC-Diatype-Regular";
+  src: url(../fonts/ABC-Diatype/ABCDiatype-Regular.ttf);
+}
+@font-face {
+  font-family: "ABC-Diatype-Light";
+  src: url(../fonts/ABC-Diatype/ABCDiatype-Light.ttf);
+}
+@font-face {
+  font-family: "Times-Now-Light";
+  src: url(../fonts/Time-Now/Times-Now-Light.otf);
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+body::-webkit-scrollbar-track {
+  background: #1d1c1c;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #fff;
+  border-radius: 10px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: #fff;
+}
+
+.authenticated-heading {
+  color: #1d1c1c;
+  font-family: "RomieTrial-Bold";
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 0px;
+  line-height: normal;
+  margin-top: -7px;
+}
+
+.notistack-Snackbar {
+  font-family: "ABC-Diatype-Medium", sans-serif !important;
+}
+
+.tooltip {
+  --bs-tooltip-color: #1d1c1c !important;
+  --bs-tooltip-bg: white !important;
+  --bs-tooltip-opacity: 1 !important;
+  font-family: "ABC-Diatype-Regular" !important;
+  font-size: 14px !important;
+  filter: drop-shadow(0px 4px 30px rgba(159, 159, 159, 0.25)) !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  text-align: center !important;
+  line-height: normal !important;
+  border: 1px solid #dee2e641 !important;
+}
+.tooltip .tooltip-inner {
+  padding: 6px 10px 10px 10px !important;
+}
+.tooltip .tooltip-arrow {
+  left: -7px !important;
+}
+
+.tooltip-styles {
+  background-color: white !important;
+  color: #1e1e1e !important;
+  border-radius: 5px !important;
+  font-weight: 400 !important;
+  font-family: "ABC-Diatype-Regular" !important;
+  box-shadow: 0px 4px 30px rgba(159, 159, 159, 0.25) !important;
+  max-width: 330px !important;
+  text-align: center !important;
+  line-height: normal !important;
+  padding: 8px 8px 11px 8px !important;
+  z-index: 1000 !important;
+}
+
+@media (max-width: 768px) {
+  .custom-order-1 {
+    order: 1;
+  }
+
+  .custom-order-2 {
+    order: 2;
+  }
+  .authenticated-heading {
+    font-size: 25px;
+    margin-top: -5px;
+  }
+}
