@@ -1,5 +1,5 @@
-import "./globals.css";
-import "bootstrap/dist/css/bootstrap.css";
+// import "./globals.css";
+// import "bootstrap/dist/css/bootstrap.css";
 import Script from "next/script";
 
 export const metadata = {
