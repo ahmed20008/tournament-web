@@ -7,7 +7,6 @@ import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 // import {deleteCookie} from "cookies-next";
 // import PulseBackdrop from "./PulseBackdrop";
-// import RumorLogo from "./RumorLogo";
 
 const Sidebar = () => {
   const router = useRouter();
@@ -178,7 +177,6 @@ const Sidebar = () => {
               <li className={styles.listItemLogo}>
                 <Link className="sidebarLink" href="/dashboard">
                   <div id="sidebarLogo">
-                    {/* <RumorLogo /> */}
                   </div>
                 </Link>
               </li>
