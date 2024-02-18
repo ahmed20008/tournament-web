@@ -1,0 +1,204 @@
+.sidebarScrollBar::-webkit-scrollbar {
+  width: 4px;
+}
+.sidebarScrollBar::-webkit-scrollbar-track {
+  background: none;
+}
+.sidebarScrollBar::-webkit-scrollbar-thumb {
+  background: none;
+  border-radius: 10px;
+}
+.sidebarScrollBar:hover::-webkit-scrollbar-thumb {
+  background: #a8a8a8;
+}
+.sidebarScrollBar::-webkit-scrollbar-thumb:hover {
+  background: #888;
+}
+
+.sidebarContent {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+}
+.sidebarContainer {
+  background-color: #1d1c1c;
+  padding: 20px;
+  height: 100vh;
+  overflow-x: hidden;
+  cursor: default;
+}
+.pinContainer {
+  width: 229px;
+  transition: width 0.3s;
+}
+.unpinContainer {
+  width: 110px;
+  transition: width 0.3s;
+}
+
+.listContainer {
+  list-style-type: none;
+  padding: 0px;
+}
+
+.listItem {
+  overflow-x: hidden;
+  border-radius: 36px;
+}
+.listItem:hover,
+.sidebarActive {
+  background-color: #fff;
+}
+
+.listItemLogo a {
+  text-decoration: none;
+}
+.listItemLogo a > div {
+  padding-left: 14px;
+  padding-top: 10px;
+  padding-bottom: 40px;
+}
+.hideSidebarImage {
+  width: 60px;
+  overflow: hidden;
+}
+
+.listItem a,
+.listItem button {
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #838282;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 45px;
+  width: 190px;
+  overflow-x: hidden;
+  gap: 10px;
+  font-size: 16px;
+  font-family: "ABC-Diatype-Medium";
+  font-weight: 500;
+  line-height: normal;
+}
+.listItem button {
+  border: none;
+  background-color: transparent;
+}
+.listItem button:focus {
+  outline: none;
+}
+.listItem svg {
+  height: 18px;
+  width: auto;
+}
+.listItem .chatIcon path {
+  fill: #838282;
+}
+.listItem .calendarIcon path {
+  stroke: #838282;
+}
+.listItem .dashboardIcon path {
+  stroke: #838282;
+  opacity: 1;
+}
+.listItem .userIcon path,
+.listItem .userIcon circle {
+  stroke: #838282;
+}
+
+.listItem:hover a,
+.listItem:hover button,
+.sidebarActive a,
+.sidebarActive button {
+  color: #1d1c1c;
+}
+.listItem:hover .chatIcon path,
+.sidebarActive .chatIcon path {
+  fill: #1d1c1c;
+}
+.listItem:hover .dashboardIcon path,
+.sidebarActive .dashboardIcon path {
+  stroke: #1d1c1c;
+}
+.listItem:hover .calendarIcon path,
+.sidebarActive .calendarIcon path {
+  stroke: #1d1c1c;
+}
+.listItem:hover .userIcon path,
+.listItem:hover .userIcon circle,
+.sidebarActive .userIcon path,
+.sidebarActive .userIcon circle {
+  stroke: #1d1c1c;
+}
+
+.listItem a > div,
+.listItem button > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 26px;
+}
+.listItem a > span {
+  flex: 1;
+}
+.hideSidebarSpan {
+  opacity: 0;
+}
+.showSidebarSpan {
+  opacity: 1;
+}
+
+.accordionBody {
+  padding: 0px 0px 0px 50px;
+  background-color: transparent;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
+.accordionBody > div{
+  padding: 10px 0px;
+}
+.accordionBody > div > a {
+  color: white;
+  font-size: 14px;
+  line-height: normal;
+  text-decoration: none;
+  display: block;
+}
+.accordionBody > div > .usersActive {
+  color: white;
+}
+.accordionBody > div > .usersNotActive {
+  color: #838282;
+}
+.accordionBody > div > a:not(.usersActive):hover {
+  color: white;
+}
+
+@media (max-width: 1199px) {
+  .sidebarContainer {
+    border-radius: 0px 35px 0px 0px;
+  }
+  .sidebarContentPinned {
+    width: 100vw;
+    height: 100vh;
+    cursor: pointer;
+    background-color: rgba(218, 218, 218, 0.3);
+  }
+  .sidebarContentUnpinned {
+    width: 0;
+    height: 0;
+  }
+  .pinContainer {
+    width: 229px;
+    transform: translate(0);
+    transition: transform 0.3s;
+  }
+  .unpinContainer {
+    width: 229px;
+    transform: translate(-229px);
+    transition: transform 0.3s;
+  }
+}

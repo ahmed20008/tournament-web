@@ -1,0 +1,66 @@
+.sidenavIconPinned {
+  width: 15px !important;
+  transform: translateX(5px);
+}
+
+.layoutPinned {
+  margin-left: 229px;
+  transition: margin 0.3s;
+  background-color: #1d1c1c;
+}
+
+.layoutUnpinned {
+  margin-left: 110px;
+  transition: margin 0.3s;
+  background-color: #1d1c1c;
+}
+
+.hideSidebarSpan {
+  opacity: 0;
+}
+.showSidebarSpan {
+  opacity: 1;
+}
+.hideSidebarImage {
+  width: 60px;
+  overflow: hidden;
+}
+.pinContainer {
+  width: 229px;
+  transition: width 0.3s;
+}
+.unpinContainer {
+  width: 110px;
+  transition: width 0.3s;
+}
+@media (max-width: 1199px) {
+  .layoutPinned {
+    margin-left: 0px;
+    padding-left: 20px;
+  }
+
+  .layoutUnpinned {
+    margin-left: 0px;
+    padding-left: 20px;
+  }
+  .sidebarContentPinned {
+    width: 100vw;
+    height: 100vh;
+    cursor: pointer;
+    background-color: rgba(218, 218, 218, 0.3);
+  }
+  .sidebarContentUnpinned {
+    width: 0;
+    height: 0;
+  }
+  .pinContainer {
+    width: 229px;
+    transform: translate(0);
+    transition: transform 0.3s;
+  }
+  .unpinContainer {
+    width: 229px;
+    transform: translate(-229px);
+    transition: transform 0.3s;
+  }
+}

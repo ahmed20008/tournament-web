@@ -1,0 +1,463 @@
+.inputFieldWhite {
+  height: 49px;
+  width: 100%;
+  background-color: white;
+  color: black;
+  font-family: "ABC-Diatype-Regular";
+  font-size: 16px;
+  line-height: normal;
+  font-weight: 400;
+  border-radius: 80px;
+  border: 1px solid #dee2e642;
+  padding: 14px 24px;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.textareaWhite {
+  width: 100%;
+  background-color: white;
+  color: black;
+  font-family: "ABC-Diatype-Regular";
+  font-size: 16px;
+  line-height: normal;
+  font-weight: 400;
+  border-radius: 27px;
+  border: 1px solid #dee2e642;
+  padding: 14px 24px;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.passwordFieldWhite {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  gap: 5px;
+  overflow: hidden;
+  border-radius: 80px;
+  height: 49px;
+  padding: 0px;
+  border: 1px solid #dee2e642;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.passwordFieldWhite > input,
+.inputFieldWithAppend > input {
+  border: none;
+  background-color: white;
+  font-size: 16px;
+  font-family: "ABC-Diatype-Regular";
+  font-weight: 400;
+  width: 90%;
+  color: #000;
+  line-height: normal;
+  padding: 14px 0px 14px 24px;
+}
+.passwordFieldWhite > img {
+  width: 15px;
+  height: auto;
+  cursor: pointer;
+  margin: 18px 24px 18px 0px;
+}
+
+.inputFieldWithAppend {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  gap: 5px;
+  overflow: hidden;
+  border-radius: 80px;
+  height: 49px;
+  padding: 0px;
+  border: 1px solid #dee2e642;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.inputFieldWithAppend > button {
+  border: none;
+  background-color: transparent;
+  margin: 18px 24px 18px 0px;
+}
+.inputFieldWithAppend svg {
+  width: 16px;
+  height: auto;
+}
+
+.inputFieldWhite::placeholder,
+.textareaWhite::placeholder,
+.passwordFieldWhite > input::placeholder,
+.customSelectField > input::placeholder,
+.inputFieldWithAppend > .inputFieldWhite::placeholder,
+.inputTypeNumberWithButtons > input::placeholder {
+  color: #838282;
+}
+
+.inputFieldWhite:focus,
+.textareaWhite:focus,
+.passwordFieldWhite:focus-within,
+.inputFieldWithAppend:focus-within,
+.inputTypeNumberWithButtons:focus-within {
+  border-color: #727272;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgba(131, 131, 131, 0.25);
+}
+
+.customSelectField > input:focus,
+.passwordFieldWhite > input:focus,
+.inputFieldWithAppend > input:focus,
+.inputFieldWithAppend > button:focus,
+.inputTypeNumberWithButtons > input:focus,
+.inputTypeNumberWithButtons > button:focus {
+  outline: none;
+}
+
+.customSelectField {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  gap: 5px;
+  overflow: hidden;
+  border-radius: 80px;
+  height: 49px;
+  padding: 14px 24px;
+  border: 1px solid #dee2e642;
+}
+.customSelectField > input {
+  background-color: transparent;
+  border: none;
+  padding: 0px;
+  font-size: 16px;
+  font-family: "ABC-Diatype-Regular";
+  font-weight: 400;
+  width: 90%;
+  color: #000;
+  line-height: normal;
+  cursor: default;
+}
+.customSelectField > svg {
+  width: 20px;
+  height: auto;
+}
+.customSelectField > svg path {
+  fill: #838282;
+}
+
+.customSelectFieldMenu {
+  overflow: hidden;
+  position: relative;
+  border-radius: 25px;
+  box-shadow: 0px 4px 30px 0px rgba(159, 159, 159, 0.25);
+  border: 1px solid #dee2e642;
+  width: 100%;
+  transform: translateX(0) !important;
+  padding: 9px 0px 8px 0px;
+}
+.customSelectFieldMenu > div {
+  max-height: 180px;
+  overflow-y: auto;
+}
+.customSelectFieldMenu > svg {
+  position: absolute;
+  top: 15px;
+  right: 24px;
+  width: 20px;
+  height: auto;
+  transform: rotate(180deg);
+}
+.customSelectFieldMenu > svg path {
+  fill: #838282;
+}
+.customSelectFieldMenu li {
+  cursor: default;
+  color: #838282;
+  font-family: "ABC-Diatype-Regular";
+  font-size: 16px;
+  font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 3px 24px;
+}
+.customSelectFieldMenu li:not(:last-of-type) {
+  margin-bottom: 5px;
+}
+.customSelectFieldMenu > div::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+.customSelectFieldMenu > div::-webkit-scrollbar-track {
+  background: none;
+}
+.customSelectFieldMenu > div::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #a4a2a2;
+}
+.customSelectFieldMenu > div::-webkit-scrollbar-thumb:hover {
+  background: #9c9c9c;
+}
+.customSelectFieldMenuWithCheckboxes {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.customSelectFieldMenuWithCheckboxes input:not(:disabled) {
+  cursor: pointer;
+}
+.customSelectFieldMenuWithCheckboxes input {
+  width: 15px;
+  height: 15px;
+  border-color: #e0e0e0;
+}
+.customSelectFieldMenuWithCheckboxes input:focus {
+  box-shadow: none;
+  border-color: #e0e0e0;
+}
+.customSelectFieldMenuWithCheckboxes input:checked[type="checkbox"] {
+  background-color: #3d3d3d;
+  border-color: #3d3d3d;
+}
+
+.filtersDropdown {
+  border-radius: 20px;
+  border: none;
+  padding: 20px 30px;
+  box-shadow: 0px 4px 30px 0px rgba(159, 159, 159, 0.25);
+  min-width: 270px;
+}
+.filtersDropdown > div:first-of-type button {
+  background-color: transparent;
+  border: none;
+}
+.filtersDropdown button > svg {
+  width: 15px;
+  height: auto;
+}
+.filtersDropdown button > svg path {
+  fill: #838282;
+}
+.filtersDropdown h3 {
+  font-family: "ABC-Diatype-Bold";
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 0px;
+}
+.filtersDropdown li {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 30px;
+  row-gap: 16px;
+}
+.filtersDropdown .filterLabel {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 16px;
+}
+.filtersDropdown .filterLabel label {
+  color: #a4a2a2;
+  font-family: "ABC-Diatype-Regular";
+  font-size: 14px;
+  font-weight: 400;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.filtersDropdown .filterLabel label svg {
+  height: 22px;
+  width: auto;
+}
+.filtersDropdown .filterLabel label svg path {
+  fill: #1d1c1c;
+  stroke: #1d1c1c;
+}
+.filtersDropdown .filterLabel input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  margin: 0;
+}
+.filtersDropdown .filterLabel input[type="checkbox"]:not(:checked) {
+  border-color: #a3a3a3;
+}
+.filtersDropdown .filterLabel input[type="checkbox"]:checked {
+  background-color: #1d1c1c;
+  border-color: #1d1c1c;
+}
+.filtersDropdown .filterLabel input[type="checkbox"]:focus {
+  box-shadow: none;
+}
+.filtersDropdown .filterLabel input[type="checkbox"]:not(:checked):focus {
+  border-color: #a3a3a3;
+}
+
+.inputTypeNumberWithButtons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  gap: 5px;
+  overflow: hidden;
+  border-radius: 80px;
+  height: 49px;
+  padding: 14px 24px;
+  border: 1px solid #dee2e642;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.inputTypeNumberWithButtons > input {
+  border: none;
+  background-color: transparent;
+  padding: 0px;
+  font-size: 16px;
+  font-family: "ABC-Diatype-Regular";
+  font-weight: 400;
+  width: 70%;
+  color: #000;
+  line-height: normal;
+  cursor: default;
+}
+.inputTypeNumberWithButtons > svg {
+  width: 20px;
+  height: auto;
+}
+.inputTypeNumberWithButtons > svg path {
+  fill: #a2a2a2;
+}
+.inputTypeNumberWithButtons > button:hover svg path {
+  fill: #575757;
+}
+.inputTypeNumberWithButtons input::-webkit-outer-spin-button,
+.inputTypeNumberWithButtons input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.inputTypeNumberWithButtons > button {
+  border: none;
+  background-color: transparent;
+}
+@media (hover: hover) and (pointer: fine) {
+  .customSelectFieldMenu li:hover {
+    background-color: #dee2e642;
+  }
+  .filtersDropdown button > svg:hover path {
+    fill: #1d1c1c;
+  }
+}
+
+.errorBorder {
+  border: 1px solid #dc3545;
+}
+.errorOutline {
+  outline: #dc3545 solid 1px;
+}
+
+.textDanger {
+  color: #dc3545;
+  font-size: 14px;
+  font-family: "ABC-Diatype-Regular";
+  margin-left: 5px;
+}
+
+.agreetoTerms {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  text-align: start;
+  gap: 16px;
+  margin-top: 8px;
+  margin-bottom: 12px;
+}
+.agreetoTerms label {
+  color: #383838;
+  font-family: "ABC-Diatype-Regular";
+  font-size: 16px;
+  line-height: normal;
+  font-weight: 400;
+}
+.agreetoTerms label a {
+  color: #383838;
+}
+.agreetoTerms label a:hover {
+  color: #5f5f5f;
+}
+.agreetoTerms input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  margin: 0;
+}
+.agreetoTerms input[type="checkbox"]:checked {
+  background-color: #1d1c1c;
+  border-color: #1d1c1c;
+}
+.agreetoTerms input[type="checkbox"]:focus {
+  box-shadow: none;
+  border-color: transparent;
+}
+
+.formFooterLinks {
+  font-family: "ABC-Diatype-Regular";
+  font-weight: 400;
+  font-size: 16px;
+  color: #1d1c1c;
+  text-align: center;
+  margin-bottom: 0px;
+}
+.formFooterLinks > a {
+  color: #1d1c1c;
+}
+.formFooterLinks > a:hover {
+  color: #5f5f5f;
+}
+
+.viewFavorite {
+  height: 49px;
+  cursor: pointer;
+  width: fit-content;
+  background-color: #000;
+  padding: 14px 24px;
+  color: #fff;
+  font-family: "ABC-Diatype-Regular";
+  font-size: 16px;
+  line-height: normal;
+  font-weight: 400;
+  border-radius: 80px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+.viewFavorite > div {
+  position: relative;
+  overflow: hidden;
+  width: 18px;
+  height: 18px;
+}
+.viewFavorite > div > svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+}
+.viewFavorite > div > input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  opacity: 0;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 450px) {
+  .filtersDropdown li {
+    grid-template-columns: 1fr;
+  }
+}
