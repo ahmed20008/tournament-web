@@ -1,0 +1,17 @@
+.pageHeading {
+  color: #1d1c1c;
+  text-align: center;
+  font-family: "RomieTrial-Bold";
+  font-style: normal;
+  font-weight: 700;
+  line-height: 83.122%;
+  margin-bottom: 40px;
+}
+.addStudentCard {
+  border-radius: 30px;
+  background-color: #e0e0e0;
+  border: none;
+  box-shadow: 0px 4px 30px 0px rgba(159, 159, 159, 0.25);
+
+
+}
