@@ -3,6 +3,9 @@ import buttonStyles from "@/assets/css/buttons.module.css";
 import formStyles from "@/assets/css/form-elements.module.css";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { setCookie, getCookie } from "cookies-next";
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth'
+import { auth } from "@/config";
 import Image from "next/image";
 import CircularProgress from "@/components/CircularProgress";
 import eyeIcon from "@/assets/images/eye.svg";
@@ -10,7 +13,7 @@ import eyeSlashIcon from "@/assets/images/eye-slash.svg";
 
 const Login = () => {
   const router = useRouter();
-
+  const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
   const initialState = {
     email: "",
     password: "",
@@ -22,7 +25,19 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setProcessing(true);
-  }
+    try {
+      const authUser = await signInWithEmailAndPassword(credentials.email, credentials.password);
+      console.log("ID Token:", authUser);
+      setCookie(`${process.env.NEXT_PUBLIC_NAME}_token`, authUser._tokenResponse.idToken, { maxAge: authUser._tokenResponse.expiresIn * 60 });
+      sessionStorage.setItem('user', true);
+      if (getCookie(`${process.env.NEXT_PUBLIC_NAME}_token`)) {
+        router.push('/dashboard');
+      }
+    } catch (error) {
+      console.error("Error signing in:", error.message);
+      setProcessing(false);
+    }
+  };
 
   return (
     <form className="w-100" onSubmit={handleLogin}>

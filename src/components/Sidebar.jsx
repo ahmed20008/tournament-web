@@ -5,14 +5,16 @@ import styles from "../assets/css/sidebar.module.css";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
-// import {deleteCookie} from "cookies-next";
-// import PulseBackdrop from "./PulseBackdrop";
+import { deleteCookie } from "cookies-next";
+import PulseBackdrop from "./PulseBackdrop";
+import { auth } from "@/config";
+import { signOut } from 'firebase/auth';
 
 const Sidebar = () => {
   const router = useRouter();
   const currentRoute = usePathname();
   const pathArray = currentRoute.split("/").filter(Boolean);
-  // const [loggingOut, setLoggingOut] = useState(false);
+  const [loggingOut, setLoggingOut] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const accordionBodyRef = useRef(null);
 
@@ -143,20 +145,13 @@ const Sidebar = () => {
   }, [handleClickOutsideSidebar, handleLinkCLick]);
 
 
-  // const handleLogout = async () => {
-  //   setLoggingOut(true);
-
-  //   import("@/api/AuthApi").then(function (module) {
-  //     const {logout} = module;
-
-  //     logout()
-  //       .then((response) => {
-  //         deleteCookie(`${process.env.NEXT_PUBLIC_NAME}_token`);
-  //         router.push("/login");
-  //       })
-  //       .catch((errors) => {});
-  //   });
-  // };
+  const handleLogout = async () => {
+    setLoggingOut(true);
+    signOut(auth)
+    sessionStorage.removeItem('user')
+    deleteCookie(`${process.env.NEXT_PUBLIC_NAME}_token`);
+    router.push("/");
+  };
 
   const handleAccordionClick = () => {
     const accordionBody = accordionBodyRef.current;
@@ -245,7 +240,7 @@ const Sidebar = () => {
                 </Link>
               </li>
               <li className={`mb-2 ${styles.listItem}`}>
-                <button>
+                <button onClick={handleLogout}>
                   <div>
                     <svg className={styles.dashboardIcon} width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M14 4L17.5 4C20.5577 4 20.5 8 20.5 12C20.5 16 20.5577 20 17.5 20H14M3 12L15 12M3 12L7 8M3 12L7 16" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -258,7 +253,7 @@ const Sidebar = () => {
           </nav>
         </div>
       </div>
-      {/* {loggingOut && <PulseBackdrop />} */}
+      {loggingOut && <PulseBackdrop />}
     </>
   );
 };
