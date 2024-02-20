@@ -1,12 +1,15 @@
 "use client";
+import { useState, useEffect } from "react";
 import styles from "../assets/css/header.module.css";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-// import {deleteCookie} from "cookies-next";
-// import PulseBackdrop from "./PulseBackdrop";
-import { useState, useEffect } from "react";
-// import {useRouter} from "next/navigation";
+import { deleteCookie } from "cookies-next";
+import PulseBackdrop from "./PulseBackdrop";
+import { auth } from "@/config";
+import { signOut } from 'firebase/auth';
+import { useRouter } from "next/navigation";
+// import { useAuthState } from 'react-firebase-hooks/auth';
 // import {useSelector} from "react-redux";
 // import {getCurrentUser} from "@/redux/selectors";
 // import {useDispatch} from "react-redux";
@@ -16,13 +19,12 @@ import userIcon from "../assets/images/user.svg";
 
 const Header = () => {
   const pathname = usePathname();
+  const router = useRouter();
   // const dispatch = useDispatch();
-  // const router = useRouter();
 
-  // let goBackLink;
   // const loggedInUser = useSelector((state) => getCurrentUser(state));
   const [loggingOut, setLoggingOut] = useState(false);
-  const [userFetched, setUserFetched] = useState(false);
+  // const [userFetched, setUserFetched] = useState(false);
 
   // useEffect(() => {
   //   const refreshUser = async () => {
@@ -47,22 +49,21 @@ const Header = () => {
   //   refreshUser();
   // }, [dispatch]);
 
-  // const handleLogout = async () => {
-  //   setLoggingOut(true);
+  // me API
+  // const [user] = useAuthState(auth);
+  // const isClient = typeof window !== 'undefined';
+  // if (isClient) {
+  //   sessionStorage.getItem('user');
+  // }
+  // console.log(user)
 
-  //   import("@/api/AuthApi").then(function (module) {
-  //     const {logout} = module;
-
-  //     logout()
-  //       .then((response) => {
-  //         deleteCookie(`${process.env.NEXT_PUBLIC_NAME}_token`);
-  //         router.push("/login");
-  //       })
-  //       .catch((errors) => {
-  //         enqueueSnackbar(errors.message, {variant: "error"});
-  //       });
-  //   });
-  // };
+  const handleLogout = async () => {
+    setLoggingOut(true);
+    signOut(auth)
+    sessionStorage.removeItem('user')
+    deleteCookie(`${process.env.NEXT_PUBLIC_NAME}_token`);
+    router.push("/");
+  };
 
   return (
     <>
@@ -88,14 +89,14 @@ const Header = () => {
               </Link>
             </li>
             <li>
-              <button className="dropdown-item border-0 bg-transparent">
+              <button className="dropdown-item border-0 bg-transparent" onClick={handleLogout}>
                 Logout
               </button>
             </li>
           </ul>
         </div>
       </header>
-      {/* {(loggingOut || !userFetched) && <PulseBackdrop />} */}
+      {loggingOut && <PulseBackdrop />}
     </>
   );
 };
