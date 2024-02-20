@@ -14,10 +14,6 @@ export default function test() {
   const userSession = sessionStorage.getItem('user');
   console.log({ user })
   const [students, setStudents] = useState([]);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: ''
-  });
 
   useEffect(() => {
     //get data from db
@@ -26,9 +22,7 @@ export default function test() {
       const querySnapshot = await getDocs(valRef);
       const studentData = [];
       querySnapshot.forEach((doc) => {
-        const { name, email } = doc.data();
-        const id = doc.id;
-        studentData.push({ id, name, email });
+        studentData.push({ id: doc.id, ...doc.data() });
       });
       setStudents(studentData);
       console.log(studentData)
@@ -57,61 +51,127 @@ export default function test() {
   //   console.log(studentData)
   // };
 
+  const [formData, setFormData] = useState({
+    student_id: '',
+    name: '',
+    scores: {
+      jumpPlace: ['', '', '', ''],
+      jumpHeight: ['', '', '', ''],
+      run: ['', '', '', ''],
+      setUp: ['', '', '', '']
+    }
+  });
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
+    setFormData(prevData => ({
+      ...prevData,
       [name]: value
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log("Form submitted");
+  const handleScoreChange = (e, scoreType, index) => {
+    const { value } = e.target;
+    setFormData(prevData => ({
+      ...prevData,
+      scores: {
+        ...prevData.scores,
+        [scoreType]: [
+          ...prevData.scores[scoreType].slice(0, index),
+          value,
+          ...prevData.scores[scoreType].slice(index + 1)
+        ]
+      }
+    }));
+  };
 
+  const handleAddStudent = async () => {
     try {
-      const valRef = collection(db, "students");
-      await addDoc(valRef, formData);
-      console.log("Data added to Firestore successfully");
-
-      // Reset form after submission
-      setFormData({
-        name: '',
-        email: ''
-      });
+      const querySnapshot = await getDocs(query(collection(db, 'students'), where('student_id', '==', formData.student_id)));
+      if (!querySnapshot.empty) {
+        console.error('Student ID already exists.');
+        return;
+      }
+      await addDoc(collection(db, 'students'), formData);
+      console.log('Student added successfully!');
+      resetForm();
     } catch (error) {
-      console.error("Error adding document: ", error);
+      console.error('Error adding student:', error);
     }
+  };
+
+  const resetForm = () => {
+    setFormData({
+      student_id: '',
+      name: '',
+      scores: {
+        jumpPlace: ['', '', '', ''],
+        jumpHeight: ['', '', '', ''],
+        run: ['', '', '', ''],
+        setUp: ['', '', '', '']
+      }
+    });
   };
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="name">Name:</label><br />
-        <input
-          type="text"
-          id="name"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-        /><br />
-        <label htmlFor="email">Email:</label><br />
-        <input
-          type="email"
-          id="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-        /><br /><br />
-        <button type="submit" onClick={handleSubmit}>Save</button>
-      </form>
+      <div>
+        <h2>Add Student</h2>
+        <div>
+          <label htmlFor="student_id">ID:</label>
+          <input
+            type="text"
+            id="student_id"
+            name="student_id"
+            value={formData.student_id}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="name">Name:</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+          />
+        </div>
+        {Object.entries(formData.scores).map(([scoreType, scoreList]) => (
+          <div key={scoreType}>
+            <label htmlFor={`${scoreType}Scores`}>{scoreType.replace(/_/g, ' ')} Scores:</label>
+            {scoreList.map((score, index) => (
+              <input
+                key={index}
+                type="text"
+                value={score}
+                onChange={(e) => handleScoreChange(e, scoreType, index)}
+              />
+            ))}
+          </div>
+        ))}
+        <div>
+          <button onClick={handleAddStudent}>Add Student</button>
+        </div>
+      </div>
 
       <div>
         <h2>Student List</h2>
         <ul>
-          {students.map((student, index) => (
-            <li key={index}>
-              <strong>Name:</strong> {student.name}, <strong>Email:</strong> {student.email}
+          {students.map((entry) => (
+            <li key={entry.id}>
+              <div>id: {entry.student_id}</div>
+              <div>Name: {entry.name}</div>
+              <div>
+                <h3>Scores:</h3>
+                <ul>
+                  {Object.entries(entry.scores).map(([scoreType, score]) => (
+                    <li key={scoreType}>
+                      <strong>{scoreType}</strong>: {score}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </li>
           ))}
         </ul>
