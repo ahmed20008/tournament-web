@@ -9,53 +9,12 @@ import PulseBackdrop from "./PulseBackdrop";
 import { auth } from "@/config";
 import { signOut } from 'firebase/auth';
 import { useRouter } from "next/navigation";
-// import { useAuthState } from 'react-firebase-hooks/auth';
-// import {useSelector} from "react-redux";
-// import {getCurrentUser} from "@/redux/selectors";
-// import {useDispatch} from "react-redux";
-// import {updateCurrentUser} from "@/redux/actionCreators";
-// import {enqueueSnackbar} from "notistack";
 import userIcon from "../assets/images/user.svg";
 
 const Header = () => {
   const pathname = usePathname();
   const router = useRouter();
-  // const dispatch = useDispatch();
-
-  // const loggedInUser = useSelector((state) => getCurrentUser(state));
   const [loggingOut, setLoggingOut] = useState(false);
-  // const [userFetched, setUserFetched] = useState(false);
-
-  // useEffect(() => {
-  //   const refreshUser = async () => {
-  //     setUserFetched(false);
-
-  //     import("@/api/AuthApi").then(function (module) {
-  //       const {me} = module;
-
-  //       me()
-  //         .then((response) => {
-  //           dispatch(updateCurrentUser(response.data.user));
-  //         })
-  //         .catch((errors) => {
-  //           enqueueSnackbar(errors.message, {variant: "error"});
-  //         })
-  //         .finally(() => {
-  //           setUserFetched(true);
-  //         });
-  //     });
-  //   };
-
-  //   refreshUser();
-  // }, [dispatch]);
-
-  // me API
-  // const [user] = useAuthState(auth);
-  // const isClient = typeof window !== 'undefined';
-  // if (isClient) {
-  //   sessionStorage.getItem('user');
-  // }
-  // console.log(user)
 
   const handleLogout = async () => {
     setLoggingOut(true);
