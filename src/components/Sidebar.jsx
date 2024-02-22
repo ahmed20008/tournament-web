@@ -223,22 +223,6 @@ const Sidebar = () => {
                   </div>
                 </div>
               </div>
-              <li className={`mb-2 ${styles.listItem} ${pathArray[0] === "profile" ? styles.sidebarActive : ""}`}>
-                <Link className="sidebarLink" href="/profile">
-                  <div>
-                    <svg className={styles.userIcon} width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <circle cx={12} cy={6} r={4} stroke="#1C274C" strokeWidth="2" />
-                      <path
-                        d="M15 20.6151C14.0907 20.8619 13.0736 21 12 21C8.13401 21 5 19.2091 5 17C5 14.7909 8.13401 13 12 13C15.866 13 19 14.7909 19 17C19 17.3453 18.9234 17.6804 18.7795 18"
-                        stroke="#1C274C"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                      />
-                    </svg>
-                  </div>
-                  <span className={` sidebarSpan showSidebarSpan`}>Profile</span>
-                </Link>
-              </li>
               <li className={`mb-2 ${styles.listItem}`}>
                 <button onClick={handleLogout}>
                   <div>

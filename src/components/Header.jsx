@@ -43,11 +43,6 @@ const Header = () => {
           <Image src={userIcon} width={10} height={10} className={`rounded-circle ${styles.navbarAvatarPlaceholder}`} alt="Avatar" data-bs-toggle="dropdown" data-bs-offset="0,10" aria-expanded="false" />
           <ul className={`dropdown-menu ${styles.headerDropdown}`}>
             <li>
-              <Link className="dropdown-item" href="/profile">
-                Profile
-              </Link>
-            </li>
-            <li>
               <button className="dropdown-item border-0 bg-transparent" onClick={handleLogout}>
                 Logout
               </button>
