@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import formStyles from "@/assets/css/form-elements.module.css";
 import styles from "@/assets/css/add-student.module.css";
 import buttonStyles from "@/assets/css/buttons.module.css?v1.1";
-import { collection, addDoc, getDocs, updateDoc, query, where } from "firebase/firestore";
+import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
 import { db } from '@/config';
 import CircularProgress from '@/components/CircularProgress';
 
@@ -34,7 +34,7 @@ const page = () => {
     } catch (error) {
       console.error('Error adding document: ', error);
       setLoading(false);
-      window.alert(error.message); // Show error message in an alert
+      window.alert(error.message);
     } finally {
       setLoading(false);
     }
