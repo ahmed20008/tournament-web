@@ -1,13 +1,59 @@
-import React from 'react'
+"use client"
+import React, { useState, useEffect } from 'react';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '@/config';
+import styles from "@/assets/css/dashboard.module.css";
+import DashboardStudentTableSkeleton from '@/skeletons/DashboardStudentTableSkeleton';
 
-export const metadata = {
-  title: "Dashboard",
+const Page = () => {
+  const [students, setStudents] = useState([]);
+  const [fetchingData, setFetchingData] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setFetchingData(true);
+      const valRef = collection(db, "students");
+      const querySnapshot = await getDocs(valRef);
+      const studentData = [];
+      querySnapshot.forEach((doc) => {
+        studentData.push({ id: doc.id, ...doc.data() });
+      });
+      setStudents(studentData);
+      setFetchingData(false);
+    };
+    fetchData();
+  }, []);
+
+  return (
+    <div className="col-12 mt-5 d-flex flex-column">
+      <h3 className={styles.dashboardHeading}>Students Table</h3>
+      <div className={styles.studentTableContainer}>
+        <div className={styles.studentTable}>
+          <table className="table m-0">
+            <thead className="table-secondary">
+              <tr>
+                <th scope="col" className='text-center'>#</th>
+                <th scope="col" className='text-center'>Student Id</th>
+                <th scope="col" className='text-center'>Student Name</th>
+                <th scope="col" className='text-center'>Student Class</th>
+              </tr>
+            </thead>
+            <tbody>
+              {students.map((student, index) => (
+                <tr className="align-middle" key={student.id}>
+                  <td className='text-center'>{index + 1}</td>
+                  <td className='text-center'>{student.id}</td>
+                  <td className='text-center'>{student.name}</td>
+                  <td className='text-center'>{student.class}</td>
+                </tr>
+              ))}
+              {fetchingData && <DashboardStudentTableSkeleton rows={5} />}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
 };
 
-const page = () => {
-  return (
-    <div>Dashboard</div>
-  )
-}
-
-export default page
+export default Page;
