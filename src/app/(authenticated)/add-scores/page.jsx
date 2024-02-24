@@ -6,7 +6,7 @@ import buttonStyles from "@/assets/css/buttons.module.css?v1.1";
 import { collection, getDocs, updateDoc, doc, query, where } from "firebase/firestore";
 import { db } from '@/config';
 import CircularProgress from '@/components/CircularProgress';
-import { calculateAverage } from '../../../assets/utlis/helperMethod'
+import { calculateAverage } from '@/utils/helperMethod';
 
 const Page = () => {
   const initialState = {
@@ -14,7 +14,6 @@ const Page = () => {
     id: '',
     class: '',
   }
-
   const [loading, setLoading] = useState(false);
   const [students, setStudents] = useState([]);
   const [addStudent, setAddStudent] = useState({ name: '' });
@@ -86,7 +85,7 @@ const Page = () => {
               <div className="mt-5 mb-3 mx-4">
                 <select
                   required
-                  className={`${formStyles.inputFieldWhite}`}
+                  className={`${formStyles.customSelectField} w-100 form-select`}
                   id="name"
                   aria-label="name"
                   value={addStudent.name}
@@ -98,27 +97,29 @@ const Page = () => {
                   ))}
                 </select>
               </div>
-              <select
-                required
-                className={`${formStyles.inputFieldWhite}`}
-                value={selectedSport}
-                onChange={(e) => handleSportChange(e.target.value)}
-              >
-                <option value="">Select Sport</option>
-                <option value="jumpPlace">Jump Place</option>
-                <option value="jumpHeight">Jump Height</option>
-                <option value="run">Run</option>
-                <option value="setUp">Set Up</option>
-              </select>
-
+              <div className="mt-2 mb-3 mx-4">
+                <select
+                  required
+                  className={`${formStyles.customSelectField} w-100 form-select`}
+                  value={selectedSport}
+                  onChange={(e) => handleSportChange(e.target.value)}
+                >
+                  <option value="">Select Sport</option>
+                  <option value="jumpPlace">Jump from Place</option>
+                  <option value="jumpHeight">Jump from Height</option>
+                  <option value="run">Run</option>
+                  <option value="setUp">Set-up Workout</option>
+                </select>
+              </div>
               {selectedSport && (
-                <div>
-                  <h3>{selectedSport}</h3>
+                <div className='mb-3 mx-4'>
+                  <h5 className={`${styles.sportHeading}`}>{selectedSport}</h5>
                   {sportValues.map((value, index) => (
                     <input
                       key={index}
                       type="text"
                       value={value}
+                      className={`${formStyles.inputFieldWhite} mb-3`}
                       onChange={(e) => handleSportValueChange(index, e.target.value)}
                     />
                   ))}
