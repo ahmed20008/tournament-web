@@ -8,7 +8,6 @@ import { db } from '@/config';
 import CircularProgress from '@/components/CircularProgress';
 import { enqueueSnackbar } from "notistack";
 import { calculateAverage } from '@/utils/helperMethod';
-import { enqueueSnackbar } from "notistack";
 
 const Page = () => {
   const initialState = {
@@ -131,7 +130,7 @@ const Page = () => {
                         className={`${formStyles.inputFieldWhite} mb-3`}
                         onChange={(e) => handleSportValueChange(index, e.target.value)}
                         required={true}
-                        min={0} 
+                        min={0}
                         max={100}
                       />
                     </>
