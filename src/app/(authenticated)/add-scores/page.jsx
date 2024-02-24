@@ -6,6 +6,7 @@ import buttonStyles from "@/assets/css/buttons.module.css?v1.1";
 import { collection, getDocs, updateDoc, doc, query, where } from "firebase/firestore";
 import { db } from '@/config';
 import CircularProgress from '@/components/CircularProgress';
+import { enqueueSnackbar } from "notistack";
 import { calculateAverage } from '@/utils/helperMethod';
 
 const Page = () => {
@@ -61,6 +62,7 @@ const Page = () => {
     setLoading(true);
     try {
       const selectedStudent = students.find(student => student.name === addStudent.name);
+      console.log(selectedStudent)
       if (!selectedStudent) {
         throw new Error('Selected student not found.');
       }
@@ -68,11 +70,13 @@ const Page = () => {
       const updatedScores = { ...selectedStudent.scores };
       updatedScores[selectedSport] = [...sportValues];
       await updateDoc(studentRef, { scores: updatedScores });
-      window.location.reload();
+      enqueueSnackbar('Scores updated successfully!', { variant: "success" })
     } catch (error) {
-      console.error('Error updating scores:', error);
+      enqueueSnackbar(`${error}`, { variant: "error" })
+      setLoading(false);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
@@ -113,7 +117,7 @@ const Page = () => {
               </div>
               {selectedSport && (
                 <div className='mb-3 mx-4'>
-                  <h5 className={`${styles.sportHeading}`}>{selectedSport}</h5>
+                  {/* <h5 className={`${styles.sportHeading}`}>{selectedSport}</h5> */}
                   {sportValues.map((value, index) => (
                     <input
                       key={index}
