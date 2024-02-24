@@ -10,6 +10,7 @@ import Image from "next/image";
 import CircularProgress from "@/components/CircularProgress";
 import eyeIcon from "@/assets/images/eye.svg";
 import eyeSlashIcon from "@/assets/images/eye-slash.svg";
+import {enqueueSnackbar} from "notistack";
 
 const Login = () => {
   const router = useRouter();
@@ -27,14 +28,13 @@ const Login = () => {
     setProcessing(true);
     try {
       const authUser = await signInWithEmailAndPassword(credentials.email, credentials.password);
-      console.log("ID Token:", authUser);
       setCookie(`${process.env.NEXT_PUBLIC_NAME}_token`, authUser._tokenResponse.idToken, { maxAge: authUser._tokenResponse.expiresIn * 60 });
       sessionStorage.setItem('user', true);
       if (getCookie(`${process.env.NEXT_PUBLIC_NAME}_token`)) {
         router.push('/dashboard');
       }
     } catch (error) {
-      console.error("Error signing in:", error.message);
+      enqueueSnackbar(`Error Signing In ${error.message}`, {variant: "error"})
       setProcessing(false);
     }
   };
