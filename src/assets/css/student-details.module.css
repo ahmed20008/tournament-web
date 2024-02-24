@@ -1,0 +1,19 @@
+.studentDetailMainHeading {
+  font-family: "RomieTrial-Medium";
+  font-size: 22px;
+  font-weight: 900px;
+  line-height: normal;
+}
+.studentDetailHeading {
+  font-family: "RomieTrial-Medium";
+  font-size: 18px;
+  font-weight: 500px;
+  line-height: normal;
+}
+.detailPageContainer p {
+  color: #585858;
+  font-family: "ABC-Diatype-Regular";
+  font-size: 14px;
+  font-weight: 400;
+  line-height: normal;
+}

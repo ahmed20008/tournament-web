@@ -5,6 +5,7 @@ import { db } from '@/config';
 import styles from "@/assets/css/dashboard.module.css";
 import DashboardStudentTableSkeleton from '@/skeletons/DashboardStudentTableSkeleton';
 import { enqueueSnackbar } from 'notistack';
+import Link from 'next/link';
 
 const Page = () => {
   const [students, setStudents] = useState([]);
@@ -45,15 +46,24 @@ const Page = () => {
                 <th scope="col" className='text-center'>Student Id</th>
                 <th scope="col" className='text-center'>Student Name</th>
                 <th scope="col" className='text-center'>Student Class</th>
+                <th scope="col" className='text-center'></th>
               </tr>
             </thead>
             <tbody>
               {students.map((student, index) => (
                 <tr className="align-middle" key={student.id}>
+                  {console.log(student)}
                   <td className='text-center'>{index + 1}</td>
                   <td className='text-center'>{student.studentId}</td>
                   <td className='text-center'>{student.name}</td>
                   <td className='text-center'>{student.class}</td>
+                  <td className='text-center'>
+                    <Link href={`/dashboard/${student.id}`}>
+                      <button className={`${styles.viewBtn}`}>
+                        View
+                      </button>
+                    </Link>
+                  </td>
                 </tr>
               ))}
               {fetchingData && <DashboardStudentTableSkeleton rows={5} />}
