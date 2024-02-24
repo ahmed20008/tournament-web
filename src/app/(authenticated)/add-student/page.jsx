@@ -7,7 +7,7 @@ import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
 import { db } from '@/config';
 import CircularProgress from '@/components/CircularProgress';
 import { enqueueSnackbar } from "notistack";
-import StudentClasses from '@/utils/ClassAttributes';
+import StudentClasses from '@/utils/classAttributes';
 
 const page = () => {
   const initialState = {
