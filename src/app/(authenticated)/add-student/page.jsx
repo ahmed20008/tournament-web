@@ -6,6 +6,8 @@ import buttonStyles from "@/assets/css/buttons.module.css?v1.1";
 import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
 import { db } from '@/config';
 import CircularProgress from '@/components/CircularProgress';
+import { enqueueSnackbar } from "notistack";
+import StudentClasses from '@/utils/ClassAttributes';
 
 const page = () => {
   const initialState = {
@@ -25,21 +27,19 @@ const page = () => {
       if (!idExistsSnapshot.empty) {
         throw new Error('ID already exists!');
       }
-  
+
       const docRef = await addDoc(collection(db, 'students'), addStudent);
-      console.log('Document written with ID: ', docRef.id);
       setAddStudent(initialState);
       setLoading(false);
-      window.alert('Student added successfully!');
+      enqueueSnackbar('Student added successfully!', { variant: "success" })
     } catch (error) {
-      console.error('Error adding document: ', error);
+      enqueueSnackbar(`${error}`, { variant: "error" })
       setLoading(false);
-      window.alert(error.message);
     } finally {
       setLoading(false);
     }
   };
-  
+
 
   return (
     <div className="container">
@@ -73,16 +73,20 @@ const page = () => {
                 />
               </div>
               <div className="mt-3 mb-3 mx-4">
-                <input
+                <select
                   required
-                  className={`${formStyles.inputFieldWhite}`}
+                  className={`${formStyles.customSelectField} w-100 form-select`}
                   id="class"
                   aria-label="class"
-                  type="text"
                   placeholder="Enter Student Class"
                   value={addStudent.class}
                   onChange={(e) => setAddStudent({ ...addStudent, class: e.target.value })}
-                />
+                >
+                  {/* <option value="1-A">1-A</option> */}
+                  {StudentClasses.map((classItem, index) => (
+                    <option key={index} value={classItem}>{classItem}</option>
+                  ))}
+                </select>
               </div>
               <div className="mt-3 mb-3 mx-4">
                 <button type="submit" className={`${buttonStyles.buttonDarkPink} `}>

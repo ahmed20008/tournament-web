@@ -4,25 +4,34 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from '@/config';
 import styles from "@/assets/css/dashboard.module.css";
 import DashboardStudentTableSkeleton from '@/skeletons/DashboardStudentTableSkeleton';
+import { enqueueSnackbar } from 'notistack';
 
 const Page = () => {
   const [students, setStudents] = useState([]);
   const [fetchingData, setFetchingData] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
-      setFetchingData(true);
-      const valRef = collection(db, "students");
-      const querySnapshot = await getDocs(valRef);
-      const studentData = [];
-      querySnapshot.forEach((doc) => {
-        studentData.push({ id: doc.id, ...doc.data() });
-      });
-      setStudents(studentData);
-      setFetchingData(false);
-    };
-    fetchData();
+    fetchData(); 
   }, []);
+
+  const fetchData = () => {
+    setFetchingData(true);
+    const valRef = collection(db, "students");
+    getDocs(valRef)
+      .then((querySnapshot) => {
+        const studentData = [];
+        querySnapshot.forEach((doc) => {
+          studentData.push({ id: doc.id, ...doc.data() });
+        });
+        setStudents(studentData);
+      })
+      .catch((error) => {
+        enqueueSnackbar(`Error fetching data: ${error}`, {variant: "error"});
+      })
+      .finally(() => {
+        setFetchingData(false);
+      });
+  };
 
   return (
     <div className="col-12 mt-5 d-flex flex-column">
@@ -50,6 +59,7 @@ const Page = () => {
               {fetchingData && <DashboardStudentTableSkeleton rows={5} />}
             </tbody>
           </table>
+          {!fetchingData && students.length < 1 && <div className={styles.emptyTable}>There are not any Students to show here yet</div>}
         </div>
       </div>
     </div>
