@@ -7,6 +7,7 @@ import { collection, getDocs, updateDoc, doc, query, where } from "firebase/fire
 import { db } from '@/config';
 import CircularProgress from '@/components/CircularProgress';
 import { calculateAverage } from '@/utils/helperMethod';
+import { enqueueSnackbar } from "notistack";
 
 const Page = () => {
   const initialState = {
@@ -27,7 +28,7 @@ const Page = () => {
         const studentList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         setStudents(studentList);
       } catch (error) {
-        console.error('Error fetching students:', error);
+        enqueueSnackbar(`Error fetching students: ${error}`, { variant: "error" })
       }
     };
     fetchStudents();
@@ -68,9 +69,10 @@ const Page = () => {
       const updatedScores = { ...selectedStudent.scores };
       updatedScores[selectedSport] = [...sportValues];
       await updateDoc(studentRef, { scores: updatedScores });
+      enqueueSnackbar(`Score Added Successfully`, { variant: "Success" })
       window.location.reload();
     } catch (error) {
-      console.error('Error updating scores:', error);
+      enqueueSnackbar(`Error updating scores: ${error}`, { variant: "error" })
     }
     setLoading(false);
   };
@@ -115,15 +117,23 @@ const Page = () => {
                 <div className='mb-3 mx-4'>
                   <h5 className={`${styles.sportHeading}`}>{selectedSport}</h5>
                   {sportValues.map((value, index) => (
-                    <input
-                      key={index}
-                      type="text"
-                      value={value}
-                      className={`${formStyles.inputFieldWhite} mb-3`}
-                      onChange={(e) => handleSportValueChange(index, e.target.value)}
-                    />
+                    <>
+                      <label htmlFor="scores" className="form-label px-1">
+                        <b>Score {index + 1}</b>
+                      </label>
+                      <input
+                        key={index}
+                        type="number"
+                        value={value}
+                        className={`${formStyles.inputFieldWhite} mb-3`}
+                        onChange={(e) => handleSportValueChange(index, e.target.value)}
+                        required={true}
+                        min={0} 
+                        max={100}
+                      />
+                    </>
                   ))}
-                  <p>Atomatic Grade: {calculateAverage(sportValues)}</p>
+                  <p>Automatic Grade: {calculateAverage(sportValues)}</p>
                 </div>
               )}
               <div className="mt-3 mb-3 mx-4">
