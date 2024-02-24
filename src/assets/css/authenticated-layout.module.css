@@ -1,0 +1,47 @@
+.layoutPinned {
+  margin-left: 229px;
+  transition: margin 0.3s;
+  background-color: #1d1c1c;
+}
+
+.layoutUnpinned {
+  margin-left: 110px;
+  transition: margin 0.3s;
+  background-color: #1d1c1c;
+}
+
+.mainContentContainer {
+  min-height: 100vh;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 25px 20px 25px 0px;
+  background-color: #1d1c1c;
+}
+
+.mainContent {
+  flex: 1;
+  background-color: #f3f3f3;
+  padding: 16px 40px 40px 40px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0px 0px 35px 35px;
+}
+
+@media (max-width: 1199px) {
+  .layoutPinned {
+    margin-left: 0px;
+    padding-left: 20px;
+  }
+
+  .layoutUnpinned {
+    margin-left: 0px;
+    padding-left: 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  .mainContent {
+    padding: 16px 30px 30px 30px;
+  }
+}
