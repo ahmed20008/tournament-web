@@ -11,7 +11,7 @@ const Page = () => {
   const [fetchingData, setFetchingData] = useState(true);
 
   useEffect(() => {
-    fetchData(); 
+    fetchData();
   }, []);
 
   const fetchData = () => {
@@ -26,7 +26,7 @@ const Page = () => {
         setStudents(studentData);
       })
       .catch((error) => {
-        enqueueSnackbar(`Error fetching data: ${error}`, {variant: "error"});
+        enqueueSnackbar(`Error fetching data: ${error}`, { variant: "error" });
       })
       .finally(() => {
         setFetchingData(false);
@@ -51,7 +51,7 @@ const Page = () => {
               {students.map((student, index) => (
                 <tr className="align-middle" key={student.id}>
                   <td className='text-center'>{index + 1}</td>
-                  <td className='text-center'>{student.id}</td>
+                  <td className='text-center'>{student.studentId}</td>
                   <td className='text-center'>{student.name}</td>
                   <td className='text-center'>{student.class}</td>
                 </tr>

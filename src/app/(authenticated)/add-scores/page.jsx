@@ -6,8 +6,8 @@ import buttonStyles from "@/assets/css/buttons.module.css?v1.1";
 import { collection, getDocs, updateDoc, doc, query, where } from "firebase/firestore";
 import { db } from '@/config';
 import CircularProgress from '@/components/CircularProgress';
-import { calculateAverage } from '@/utils/helperMethod';
 import { enqueueSnackbar } from "notistack";
+import { calculateAverage } from '@/utils/helperMethod';
 
 const Page = () => {
   const initialState = {
@@ -62,6 +62,7 @@ const Page = () => {
     setLoading(true);
     try {
       const selectedStudent = students.find(student => student.name === addStudent.name);
+      console.log(selectedStudent)
       if (!selectedStudent) {
         throw new Error('Selected student not found.');
       }
@@ -69,12 +70,13 @@ const Page = () => {
       const updatedScores = { ...selectedStudent.scores };
       updatedScores[selectedSport] = [...sportValues];
       await updateDoc(studentRef, { scores: updatedScores });
-      enqueueSnackbar(`Score Added Successfully`, { variant: "Success" })
-      window.location.reload();
+      enqueueSnackbar('Scores updated successfully!', { variant: "success" })
     } catch (error) {
-      enqueueSnackbar(`Error updating scores: ${error}`, { variant: "error" })
+      enqueueSnackbar(`${error}`, { variant: "error" })
+      setLoading(false);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
@@ -115,7 +117,7 @@ const Page = () => {
               </div>
               {selectedSport && (
                 <div className='mb-3 mx-4'>
-                  <h5 className={`${styles.sportHeading}`}>{selectedSport}</h5>
+                  {/* <h5 className={`${styles.sportHeading}`}>{selectedSport}</h5> */}
                   {sportValues.map((value, index) => (
                     <>
                       <label htmlFor="scores" className="form-label px-1">
@@ -128,7 +130,7 @@ const Page = () => {
                         className={`${formStyles.inputFieldWhite} mb-3`}
                         onChange={(e) => handleSportValueChange(index, e.target.value)}
                         required={true}
-                        min={0} 
+                        min={0}
                         max={100}
                       />
                     </>

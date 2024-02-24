@@ -12,8 +12,14 @@ import StudentClasses from '@/utils/classAttributes';
 const page = () => {
   const initialState = {
     name: '',
-    id: '',
+    studentId: '',
     class: '',
+    scores: {
+      jumpPlace: ['', '', '', ''],
+      jumpHeight: ['', '', '', ''],
+      run: ['', '', '', ''],
+      setUp: ['', '', '', '']
+    }
   }
   const [addStudent, setAddStudent] = useState(initialState);
   const [loading, setLoading] = useState(false);
@@ -22,7 +28,7 @@ const page = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const idExistsQuery = query(collection(db, 'students'), where('id', '==', addStudent.id));
+      const idExistsQuery = query(collection(db, 'students'), where('studentId', '==', addStudent.studentId));
       const idExistsSnapshot = await getDocs(idExistsQuery);
       if (!idExistsSnapshot.empty) {
         throw new Error('ID already exists!');
@@ -64,12 +70,12 @@ const page = () => {
                 <input
                   required
                   className={`${formStyles.inputFieldWhite}`}
-                  id="id"
-                  aria-label="id"
+                  id="studentId"
+                  aria-label="studentId"
                   type="text"
                   placeholder="Enter Student Id"
-                  value={addStudent.id}
-                  onChange={(e) => setAddStudent({ ...addStudent, id: e.target.value })}
+                  value={addStudent.studentId}
+                  onChange={(e) => setAddStudent({ ...addStudent, studentId: e.target.value })}
                 />
               </div>
               <div className="mt-3 mb-3 mx-4">
