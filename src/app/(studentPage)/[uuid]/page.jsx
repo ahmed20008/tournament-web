@@ -5,8 +5,6 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 import { enqueueSnackbar } from 'notistack';
 import styles from "@/assets/css/student-details.module.css";
 import Skeleton from "react-loading-skeleton";
-import Link from 'next/link';
-import { ArrowHeadIcon } from '@/components/IconSVG';
 import { useParams } from 'next/navigation';
 
 const Page = () => {
