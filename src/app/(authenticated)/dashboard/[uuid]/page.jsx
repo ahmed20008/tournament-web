@@ -5,6 +5,8 @@ import { db } from '@/config';
 import { enqueueSnackbar } from 'notistack';
 import styles from "@/assets/css/student-details.module.css"
 import Skeleton from "react-loading-skeleton";
+import Link from 'next/link';
+import { ArrowHeadIcon } from '@/components/IconSVG';
 
 const Page = () => {
   const [student, setStudent] = useState(null);
@@ -40,6 +42,10 @@ const Page = () => {
   return (
     <>
       <div className={`${styles.detailPageContainer}`}>
+        <Link href="/dashboard" className={`d-flex flex-row align-items-center ${styles.headerGoBack}`}>
+          <ArrowHeadIcon />
+          <p className="px-1 m-0">Go Back</p>
+        </Link>
         <h2 className={`${styles.studentDetailMainHeading}`}>Student Score Details</h2>
         <div className="row">
           <h3>{!fetchingData ? student?.name : <Skeleton width={120} />}</h3>
