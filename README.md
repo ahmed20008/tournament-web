@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Project Setup Instructions
 
-## Getting Started
+## Running Locally
 
-First, run the development server:
+### Install Dependencies
 
-```bash
+npm install
+
+## Running the Project
+
+### Start the Project
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This command launches the project in development mode.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Building for Production
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Create a Production Build
 
-## Learn More
+npm run build
 
-To learn more about Next.js, take a look at the following resources:
+## Firebase Configuration
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Before running the project locally, configure Firebase:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+1. Create an app in Firebase.
+2. Add Firebase credentials to your `.env.local` file.
+3. Enable authentication in the Firebase console.
+4. Create a Firestore database in the Firebase console.
 
-## Deploy on Vercel
+## Firestore Index Creation
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+To enable efficient class filtering, create the required index in the Firebase console:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. Visit the Firebase console for your project.
+2. Go to the Firestore database section.
+3. Create the necessary composite index. Firestore may prompt you with a link if an index is required.
+
+   Alternatively, manually create the composite index for the combination of `class` and `name` fields.
+
+After completing these steps, you should be able to run the project locally with the class filter functionality working as expected.

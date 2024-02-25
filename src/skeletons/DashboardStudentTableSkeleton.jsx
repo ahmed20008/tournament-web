@@ -1,4 +1,5 @@
 import Skeleton from "react-loading-skeleton";
+import styles from "@/assets/css/dashboard.module.css";
 
 const DashboardStudentTableSkeleton = ({ rows }) => {
   return (
@@ -18,6 +19,11 @@ const DashboardStudentTableSkeleton = ({ rows }) => {
             </td>
             <td className="text-center">
               <Skeleton height={20} width={80} />
+            </td>
+            <td className='text-center'>
+              <button className={`${styles.viewBtn}`} disabled>
+                View
+              </button>
             </td>
           </tr>
         ))}
