@@ -7,26 +7,35 @@ import formStyles from "@/assets/css/form-elements.module.css";
 import DashboardStudentTableSkeleton from '@/skeletons/DashboardStudentTableSkeleton';
 import { enqueueSnackbar } from 'notistack';
 import Link from 'next/link';
+import StudentClasses from '@/utils/classAttributes';
 
 const Page = () => {
   const [students, setStudents] = useState([]);
   const [fetchingData, setFetchingData] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedClass, setSelectedClass] = useState("");
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [selectedClass]);
 
   const fetchData = async () => {
     setFetchingData(true);
     try {
       const studentsRef = collection(db, "students");
-      const q = query(studentsRef, orderBy('name'), where('name', '>=', searchTerm), where('name', '<=', searchTerm + '\uf8ff'));
+      let q = query(studentsRef, orderBy('name'), where('name', '>=', searchTerm), where('name', '<=', searchTerm + '\uf8ff'));
+
+      // Add class filter if selectedClass is not empty
+      if (selectedClass !== "") {
+        q = query(studentsRef, orderBy('name'), where('class', '==', selectedClass), where('name', '>=', searchTerm), where('name', '<=', searchTerm + '\uf8ff'));
+      }
+
       const querySnapshot = await getDocs(q);
       const studentData = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setStudents(studentData);
     } catch (error) {
       enqueueSnackbar(`Error fetching data: ${error}`, { variant: "error" });
+      console.error(error)
     } finally {
       setFetchingData(false);
     }
@@ -54,6 +63,23 @@ const Page = () => {
               }
             }}
           />
+        </div>
+        <div className="col-md-3 mb-3">
+          <label htmlFor="student-class" className={styles.studentFilterLabel}>
+            Filter by class
+          </label>
+          <select
+            id="student-class"
+            type="text"
+            className={`form-control ${formStyles.customSelectField} form-select`}
+            value={selectedClass}
+            onChange={(e) => setSelectedClass(e.target.value)}
+          >
+            <option value="">Filter by Class</option>
+            {StudentClasses.map((classItem, index) => (
+              <option key={index} value={classItem}>{classItem}</option>
+            ))}
+          </select>
         </div>
       </div>
       <div className={styles.studentTableContainer}>
