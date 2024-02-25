@@ -15,10 +15,10 @@ const page = () => {
     studentId: '',
     class: '',
     scores: {
-      jumpPlace: ['', '', '', ''],
-      jumpHeight: ['', '', '', ''],
-      run: ['', '', '', ''],
-      setUp: ['', '', '', '']
+      jumpPlace: Array(4).fill({ score: '' }),
+      jumpHeight: Array(4).fill({ score: '' }),
+      run: Array(4).fill({ score: '', time: '' }),
+      setUp: Array(4).fill({ score: '', time: '' })
     }
   }
   const [addStudent, setAddStudent] = useState(initialState);
