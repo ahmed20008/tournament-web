@@ -18,6 +18,7 @@ const Page = () => {
   useEffect(() => {
     fetchData();
   }, [selectedClass]);
+  console.log(students)
 
   const fetchData = async () => {
     setFetchingData(true);
