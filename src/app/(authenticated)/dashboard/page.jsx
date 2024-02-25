@@ -35,7 +35,6 @@ const Page = () => {
       setStudents(studentData);
     } catch (error) {
       enqueueSnackbar(`Error fetching data: ${error}`, { variant: "error" });
-      console.error(error)
     } finally {
       setFetchingData(false);
     }

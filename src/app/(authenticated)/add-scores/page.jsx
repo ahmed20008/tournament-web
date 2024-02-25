@@ -62,7 +62,6 @@ const Page = () => {
     setLoading(true);
     try {
       const selectedStudent = students.find(student => student.name === addStudent.name);
-      console.log(selectedStudent)
       if (!selectedStudent) {
         throw new Error('Selected student not found.');
       }
