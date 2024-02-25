@@ -54,7 +54,7 @@ const Page = () => {
           <p className="px-1 m-0">Go Back</p>
         </Link>
         <h2 className={`${styles.studentDetailMainHeading}`}>Student Score Details</h2>
-        <div>
+        <div className='Line-graph'>
           {student && (
             <Line
               data={{
@@ -101,7 +101,6 @@ const Page = () => {
             />
           )}
         </div>
-
         <div className="row">
           <h3>{!fetchingData ? student?.name : <Skeleton width={120} />}</h3>
           <p>Class: {!fetchingData ? student?.class : <Skeleton width={80} />}</p>
