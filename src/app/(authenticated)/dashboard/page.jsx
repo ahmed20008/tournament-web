@@ -25,7 +25,6 @@ const Page = () => {
       const studentsRef = collection(db, "students");
       let q = query(studentsRef, orderBy('name'), where('name', '>=', searchTerm), where('name', '<=', searchTerm + '\uf8ff'));
 
-      // Add class filter if selectedClass is not empty
       if (selectedClass !== "") {
         q = query(studentsRef, orderBy('name'), where('class', '==', selectedClass), where('name', '>=', searchTerm), where('name', '<=', searchTerm + '\uf8ff'));
       }
