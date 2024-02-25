@@ -7,6 +7,7 @@ import styles from "@/assets/css/student-details.module.css"
 import Skeleton from "react-loading-skeleton";
 import Link from 'next/link';
 import { ArrowHeadIcon } from '@/components/IconSVG';
+import { useRouter } from 'next/router'
 
 const Page = () => {
   const [student, setStudent] = useState(null);
