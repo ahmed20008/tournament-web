@@ -88,7 +88,7 @@ const page = () => {
                   value={addStudent.class}
                   onChange={(e) => setAddStudent({ ...addStudent, class: e.target.value })}
                 >
-                  {/* <option value="1-A">1-A</option> */}
+                  <option value="">Select Class</option>
                   {StudentClasses.map((classItem, index) => (
                     <option key={index} value={classItem}>{classItem}</option>
                   ))}
