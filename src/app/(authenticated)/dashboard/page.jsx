@@ -1,8 +1,9 @@
 "use client"
 import React, { useState, useEffect } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, query, where, orderBy } from 'firebase/firestore';
 import { db } from '@/config';
 import styles from "@/assets/css/dashboard.module.css";
+import formStyles from "@/assets/css/form-elements.module.css";
 import DashboardStudentTableSkeleton from '@/skeletons/DashboardStudentTableSkeleton';
 import { enqueueSnackbar } from 'notistack';
 import Link from 'next/link';
@@ -10,33 +11,51 @@ import Link from 'next/link';
 const Page = () => {
   const [students, setStudents] = useState([]);
   const [fetchingData, setFetchingData] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     fetchData();
   }, []);
 
-  const fetchData = () => {
+  const fetchData = async () => {
     setFetchingData(true);
-    const valRef = collection(db, "students");
-    getDocs(valRef)
-      .then((querySnapshot) => {
-        const studentData = [];
-        querySnapshot.forEach((doc) => {
-          studentData.push({ id: doc.id, ...doc.data() });
-        });
-        setStudents(studentData);
-      })
-      .catch((error) => {
-        enqueueSnackbar(`Error fetching data: ${error}`, { variant: "error" });
-      })
-      .finally(() => {
-        setFetchingData(false);
-      });
+    try {
+      const studentsRef = collection(db, "students");
+      const q = query(studentsRef, orderBy('name'), where('name', '>=', searchTerm), where('name', '<=', searchTerm + '\uf8ff'));
+      const querySnapshot = await getDocs(q);
+      const studentData = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      setStudents(studentData);
+    } catch (error) {
+      enqueueSnackbar(`Error fetching data: ${error}`, { variant: "error" });
+    } finally {
+      setFetchingData(false);
+    }
   };
 
   return (
-    <div className="col-12 mt-5 d-flex flex-column">
+    <div className="col-12 mt-2 d-flex flex-column">
       <h3 className={styles.dashboardHeading}>Students Table</h3>
+      <div className='row'>
+        <div className="col-md-3 mb-3">
+          <label htmlFor="student-name" className={styles.studentFilterLabel}>
+            Student Name
+          </label>
+          <input
+            autoComplete="off"
+            id="student-name"
+            type="text"
+            className={`form-control ${formStyles.inputFieldWhite} ${styles.studentFilterInput}`}
+            placeholder="Enter Student Name"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                fetchData();
+              }
+            }}
+          />
+        </div>
+      </div>
       <div className={styles.studentTableContainer}>
         <div className={styles.studentTable}>
           <table className="table m-0">
@@ -52,7 +71,6 @@ const Page = () => {
             <tbody>
               {students.map((student, index) => (
                 <tr className="align-middle" key={student.id}>
-                  {console.log(student)}
                   <td className='text-center'>{index + 1}</td>
                   <td className='text-center'>{student.studentId}</td>
                   <td className='text-center'>{student.name}</td>
