@@ -4,6 +4,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/config';
 import { enqueueSnackbar } from 'notistack';
 import styles from "@/assets/css/student-details.module.css"
+import Skeleton from "react-loading-skeleton";
 
 const Page = () => {
   const [student, setStudent] = useState(null);
@@ -41,31 +42,55 @@ const Page = () => {
       <div className={`${styles.detailPageContainer}`}>
         <h2 className={`${styles.studentDetailMainHeading}`}>Student Score Details</h2>
         <div className="row">
-          <h3>{student?.name}</h3>
-          <p>Class: {student?.class}</p>
+          <h3>{!fetchingData ? student?.name : <Skeleton width={120} />}</h3>
+          <p>Class: {!fetchingData ? student?.class : <Skeleton width={80} />}</p>
           <div className="col-md-6">
             <h4 className={`${styles.studentDetailHeading}`}>Jump from Place</h4>
-            {student?.scores.jumpPlace.map((score, index) => (
-              <p key={index}>Score {index + 1}: <span className='fw-bold'>{score}</span></p>
-            ))}
+            {!fetchingData ? (
+              student.scores.jumpPlace.map((score, index) => (
+                <p key={index}>Score {index + 1}: <span className='fw-bold'>{score ? score : 'N/A'}</span></p>
+              ))
+            ) : (
+              Array.from({ length: 4 }).map((_, index) => (
+                <Skeleton key={index} height={25} width={120} />
+              ))
+            )}
           </div>
           <div className="col-md-6">
             <h4 className={`${styles.studentDetailHeading}`}>Jump from Height</h4>
-            {student?.scores.jumpHeight.map((score, index) => (
-              <p key={index}>Score {index + 1}: <span className='fw-bold'>{score}</span></p>
-            ))}
+            {!fetchingData ? (
+              student.scores.jumpHeight.map((score, index) => (
+                <p key={index}>Score {index + 1}: <span className='fw-bold'>{score ? score : 'N/A'}</span></p>
+              ))
+            ) : (
+              Array.from({ length: 4 }).map((_, index) => (
+                <Skeleton key={index} height={25} width={120} />
+              ))
+            )}
           </div>
           <div className="col-md-6">
             <h4 className={`${styles.studentDetailHeading}`}>Run</h4>
-            {student?.scores.run.map((score, index) => (
-              <p key={index}>Score {index + 1}: <span className='fw-bold'>{score}</span></p>
-            ))}
+            {!fetchingData ? (
+              student.scores.run.map((score, index) => (
+                <p key={index}>Score {index + 1}: <span className='fw-bold'>{score ? score : 'N/A'}</span></p>
+              ))
+            ) : (
+              Array.from({ length: 4 }).map((_, index) => (
+                <Skeleton key={index} height={25} width={120} />
+              ))
+            )}
           </div>
           <div className="col-md-6">
             <h4 className={`${styles.studentDetailHeading}`}>Set-up Workout</h4>
-            {student?.scores.setUp.map((score, index) => (
-              <p key={index}>Score {index + 1}: <span className='fw-bold'>{score}</span></p>
-            ))}
+            {!fetchingData ? (
+              student.scores.setUp.map((score, index) => (
+                <p key={index}>Score {index + 1}: <span className='fw-bold'>{score ? score : 'N/A'}</span></p>
+              ))
+            ) : (
+              Array.from({ length: 4 }).map((_, index) => (
+                <Skeleton key={index} height={25} width={120} />
+              ))
+            )}
           </div>
         </div>
       </div>
