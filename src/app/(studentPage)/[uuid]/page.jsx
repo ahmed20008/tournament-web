@@ -1,34 +1,39 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import { db } from '@/config';
-import { doc, getDoc } from 'firebase/firestore';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 import { enqueueSnackbar } from 'notistack';
 import styles from "@/assets/css/student-details.module.css";
 import Skeleton from "react-loading-skeleton";
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { ArrowHeadIcon } from '@/components/IconSVG';
+import { useParams } from 'next/navigation';
 
 const Page = () => {
+  const params = useParams();
   const [student, setStudent] = useState(null);
   const [fetchingData, setFetchingData] = useState(true);
-  // const router = useRouter();
-  const id = "0Q1tByOINDqHkEjQ0A8q";
+
+  const id = params.uuid;
 
   useEffect(() => {
     if (id) {
       fetchData(id);
     }
-  }, []);
+  }, [id]);
 
   const fetchData = (studentId) => {
     setFetchingData(true);
-    const valRef = doc(db, "students", studentId);
-    getDoc(valRef)
-      .then((docSnapshot) => {
-        if (docSnapshot.exists()) {
-          const studentData = docSnapshot.data();
-          setStudent({ id: docSnapshot.id, ...studentData });
+    const q = query(collection(db, "students"), where("studentId", "==", studentId));
+    getDocs(q)
+      .then((querySnapshot) => {
+        if (!querySnapshot.empty) {
+          querySnapshot.forEach((docSnapshot) => {
+            const studentData = docSnapshot.data();
+            setStudent({ id: docSnapshot.id, ...studentData });
+          });
         } else {
-          enqueueSnackbar(`No student found with ID: ${studentId}`, { variant: "error" });
+          enqueueSnackbar(`No student found with studentId: ${studentId}`, { variant: "error" });
         }
       })
       .catch((error) => {
@@ -49,7 +54,7 @@ const Page = () => {
           <div className="col-md-6">
             <h4 className={`${styles.studentDetailHeading}`}>Jump from Place</h4>
             {!fetchingData ? (
-              student.scores.jumpPlace.map((score, index) => (
+              student?.scores.jumpPlace.map((score, index) => (
                 <p key={index}>Score {index + 1}: <span className='fw-bold'>{score.score ? score.score : 'N/A'}</span></p>
               ))
             ) : (
@@ -61,7 +66,7 @@ const Page = () => {
           <div className="col-md-6">
             <h4 className={`${styles.studentDetailHeading}`}>Jump from Height</h4>
             {!fetchingData ? (
-              student.scores.jumpHeight.map((score, index) => (
+              student?.scores.jumpHeight.map((score, index) => (
                 <p key={index}>Score {index + 1}: <span className='fw-bold'>{score.score ? score.score : 'N/A'}</span></p>
               ))
             ) : (
@@ -73,7 +78,7 @@ const Page = () => {
           <div className="col-md-6">
             <h4 className={`${styles.studentDetailHeading}`}>Run</h4>
             {!fetchingData ? (
-              student.scores.run.map((score, index) => (
+              student?.scores.run.map((score, index) => (
                 <p key={index}>Score {index + 1}: <span className='fw-bold'>{score.score ? score.score : 'N/A'}</span></p>
               ))
             ) : (
@@ -85,7 +90,7 @@ const Page = () => {
           <div className="col-md-6">
             <h4 className={`${styles.studentDetailHeading}`}>Set-up Workout</h4>
             {!fetchingData ? (
-              student.scores.setUp.map((score, index) => (
+              student?.scores.setUp.map((score, index) => (
                 <p key={index}>Score {index + 1}: <span className='fw-bold'>{score.score ? score.score : 'N/A'}</span></p>
               ))
             ) : (

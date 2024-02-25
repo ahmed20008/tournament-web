@@ -101,7 +101,7 @@ const Page = () => {
                   <td className='text-center'>{student.name}</td>
                   <td className='text-center'>{student.class}</td>
                   <td className='text-center'>
-                    <Link href={`/dashboard/${student.id}`}>
+                    <Link href={`/dashboard/${student.studentId}`}>
                       <button className={`${styles.viewBtn}`}>
                         View
                       </button>
