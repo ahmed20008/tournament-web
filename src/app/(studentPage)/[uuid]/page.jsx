@@ -6,10 +6,11 @@ import { enqueueSnackbar } from 'notistack';
 import styles from "@/assets/css/student-details.module.css";
 import Skeleton from "react-loading-skeleton";
 import { useParams } from 'next/navigation';
-import { Chart as ChartJS } from 'chart.js/auto';
 import { Line } from 'react-chartjs-2';
 import buttonStyles from "@/assets/css/buttons.module.css";
 import Link from 'next/link';
+import { Chart as ChartJS } from 'chart.js/auto';
+import { calculateAverage } from '@/utils/helperMethod';
 
 const Page = () => {
   const params = useParams();
@@ -60,32 +61,32 @@ const Page = () => {
           <p>Student Id: {!fetchingData ? student?.studentId : <Skeleton width={50} />}</p>
           <p>Class: {!fetchingData ? student?.class : <Skeleton width={80} />}</p>
           <div className='Line-graph mb-3'>
-            {student && (
+            {student && student?.scores && (
               <Line
                 data={{
-                  labels: student.scores.jumpPlace.map((data, index) => `Attempt ${index + 1}`),
+                  labels: student?.scores.jumpPlace.map((data, index) => `Attempt ${index + 1}`),
                   datasets: [
                     {
                       label: "Jump from Place",
-                      data: student.scores.jumpPlace.map((data) => data.score),
+                      data: student?.scores.jumpPlace.map((data) => data.score),
                       backgroundColor: "#064FF0",
                       borderColor: "#064FF0",
                     },
                     {
                       label: "Jump from Height",
-                      data: student.scores.jumpHeight.map((data) => data.score),
+                      data: student?.scores.jumpHeight.map((data) => data.score),
                       backgroundColor: "#FF3030",
                       borderColor: "#FF3030",
                     },
                     {
                       label: "Run",
-                      data: student.scores.run.map((data) => data.score),
+                      data: student?.scores.run.map((data) => data.score),
                       backgroundColor: "#00FF00",
                       borderColor: "#00FF00",
                     },
                     {
                       label: "Set-up Workout",
-                      data: student.scores.setUp.map((data) => data.score),
+                      data: student?.scores.setUp.map((data) => data.score),
                       backgroundColor: "#FFFF00",
                       borderColor: "#FFFF00",
                     },
@@ -117,6 +118,9 @@ const Page = () => {
                 <Skeleton key={index} height={25} width={120} />
               ))
             )}
+            <hr />
+            <p className='fw-bold'>Average: {student?.scores && calculateAverage(student?.scores?.jumpPlace.map(score => score.score))}</p>
+            <hr />
           </div>
           <div className="col-md-6">
             <h4 className={`${styles.studentDetailHeading}`}>Jump from Height</h4>
@@ -129,6 +133,9 @@ const Page = () => {
                 <Skeleton key={index} height={25} width={120} />
               ))
             )}
+            <hr />
+            <p className='fw-bold'>Average: {student?.scores && calculateAverage(student?.scores?.jumpHeight.map(score => score.score))}</p>
+            <hr />
           </div>
           <div className="col-md-6">
             <h4 className={`${styles.studentDetailHeading}`}>Run</h4>
@@ -144,6 +151,9 @@ const Page = () => {
                 <Skeleton key={index} height={25} width={120} />
               ))
             )}
+            <hr />
+            <p className='fw-bold'>Average: {student?.scores && calculateAverage(student?.scores?.run.map(score => score.score))}</p>
+            <hr />
           </div>
           <div className="col-md-6">
             <h4 className={`${styles.studentDetailHeading}`}>Set-up Workout</h4>
@@ -159,6 +169,9 @@ const Page = () => {
                 <Skeleton key={index} height={25} width={120} />
               ))
             )}
+            <hr />
+            <p className='fw-bold'>Average: {student?.scores && calculateAverage(student?.scores?.setUp.map(score => score.score))}</p>
+            <hr />
           </div>
         </div>
       </div>

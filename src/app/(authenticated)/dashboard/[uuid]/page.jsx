@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { ArrowHeadIcon } from '@/components/IconSVG';
 import { useParams } from 'next/navigation';
 import { Line } from 'react-chartjs-2';
+import { Chart as ChartJS } from 'chart.js/auto';
 import buttonStyles from "@/assets/css/buttons.module.css";
 import { calculateAverage } from '@/utils/helperMethod';
 
@@ -66,29 +67,29 @@ const Page = () => {
             {student && (
               <Line
                 data={{
-                  labels: student.scores.jumpPlace.map((data, index) => `Attempt ${index + 1}`),
+                  labels: student?.scores.jumpPlace.map((data, index) => `Attempt ${index + 1}`),
                   datasets: [
                     {
                       label: "Jump from Place",
-                      data: student.scores.jumpPlace.map((data) => data.score),
+                      data: student?.scores.jumpPlace.map((data) => data.score),
                       backgroundColor: "#064FF0",
                       borderColor: "#064FF0",
                     },
                     {
                       label: "Jump from Height",
-                      data: student.scores.jumpHeight.map((data) => data.score),
+                      data: student?.scores.jumpHeight.map((data) => data.score),
                       backgroundColor: "#FF3030",
                       borderColor: "#FF3030",
                     },
                     {
                       label: "Run",
-                      data: student.scores.run.map((data) => data.score),
+                      data: student?.scores.run.map((data) => data.score),
                       backgroundColor: "#00FF00",
                       borderColor: "#00FF00",
                     },
                     {
                       label: "Set-up Workout",
-                      data: student.scores.setUp.map((data) => data.score),
+                      data: student?.scores.setUp.map((data) => data.score),
                       backgroundColor: "#FFFF00",
                       borderColor: "#FFFF00",
                     },
@@ -121,7 +122,7 @@ const Page = () => {
               ))
             )}
             <hr />
-            <p className='fw-bold'>Average: {calculateAverage(student?.scores.jumpPlace.map(score => score.score))}</p>
+            <p className='fw-bold'>Average: {student?.scores && calculateAverage(student?.scores.jumpPlace.map(score => score.score))}</p>
             <hr />
           </div>
           <div className="col-md-6">
@@ -136,7 +137,7 @@ const Page = () => {
               ))
             )}
             <hr />
-            <p className='fw-bold'>Average: {calculateAverage(student?.scores.jumpHeight.map(score => score.score))}</p>
+            <p className='fw-bold'>Average: {student?.scores && calculateAverage(student?.scores.jumpHeight.map(score => score.score))}</p>
             <hr />
           </div>
           <div className="col-md-6">
@@ -160,7 +161,7 @@ const Page = () => {
               ))
             )}
             <hr />
-            <p className='fw-bold'>Average: {calculateAverage(student?.scores.run.map(score => score.score))}</p>
+            <p className='fw-bold'>Average: {student?.scores && calculateAverage(student?.scores.run.map(score => score.score))}</p>
             <hr />
           </div>
           <div className="col-md-6">
@@ -184,7 +185,7 @@ const Page = () => {
               ))
             )}
             <hr />
-            <p className='fw-bold'>Average: {calculateAverage(student?.scores.setUp.map(score => score.score))}</p>
+            <p className='fw-bold'>Average: {student?.scores && calculateAverage(student?.scores.setUp.map(score => score.score))}</p>
             <hr />
           </div>
         </div>
