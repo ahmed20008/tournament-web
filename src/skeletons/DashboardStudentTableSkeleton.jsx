@@ -20,6 +20,18 @@ const DashboardStudentTableSkeleton = ({ rows }) => {
             <td className="text-center">
               <Skeleton height={20} width={80} />
             </td>
+            <td className="text-center">
+              <Skeleton height={20} width={80} />
+            </td>
+            <td className="text-center">
+              <Skeleton height={20} width={80} />
+            </td>
+            <td className="text-center">
+              <Skeleton height={20} width={80} />
+            </td>
+            <td className="text-center">
+              <Skeleton height={20} width={80} />
+            </td>
             <td className='text-center'>
               <button className={`${styles.viewBtn}`} disabled>
                 View

@@ -16,8 +16,8 @@ const page = () => {
         <div className={styles.authContent}>
           <h1 className="mb-35">Welcome to Tournament App.</h1>
           <p className="mb-2">Welcome to the Tournament App, your all-in-one platform for managing sports tournaments effortlessly. Log in to stay updated on scores, track progress, and engage with your team like never before!</p>
-          <div className="d-flex gap-5 my-4">
-            <Link href="/login-teacher" aria-disabled="false" className={buttonStyles.buttonDarkPink}>
+          <div className={`${styles.landingPageBtns} my-4`}>
+            <Link href="/login-teacher" aria-disabled="false" className={`${buttonStyles.buttonDarkPink}`}>
               Login as Teacher
             </Link>
             <Link href="/login-student" aria-disabled="false" className={buttonStyles.buttonDarkPink}>

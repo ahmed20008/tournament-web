@@ -8,6 +8,8 @@ import Skeleton from "react-loading-skeleton";
 import { useParams } from 'next/navigation';
 import { Chart as ChartJS } from 'chart.js/auto';
 import { Line } from 'react-chartjs-2';
+import buttonStyles from "@/assets/css/buttons.module.css";
+import Link from 'next/link';
 
 const Page = () => {
   const params = useParams();
@@ -47,9 +49,15 @@ const Page = () => {
   return (
     <>
       <div className={`${styles.detailPageContainer}`}>
+        <div className='text-end'>
+          <Link href="/login-student" className={`${buttonStyles.buttonDarkPink}`} style={{ width: "120px" }}>
+            Logout
+          </Link>
+        </div>
         <h2 className={`${styles.studentDetailMainHeading}`}>Student Score Details</h2>
         <div className="row">
           <h3>{!fetchingData ? student?.name : <Skeleton width={120} />}</h3>
+          <p>Student Id: {!fetchingData ? student?.studentId : <Skeleton width={50} />}</p>
           <p>Class: {!fetchingData ? student?.class : <Skeleton width={80} />}</p>
           <div className='Line-graph mb-3'>
             {student && (

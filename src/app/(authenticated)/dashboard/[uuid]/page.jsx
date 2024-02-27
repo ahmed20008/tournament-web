@@ -8,8 +8,9 @@ import Skeleton from "react-loading-skeleton";
 import Link from 'next/link';
 import { ArrowHeadIcon } from '@/components/IconSVG';
 import { useParams } from 'next/navigation';
-import { Chart as ChartJS } from 'chart.js/auto';
 import { Line } from 'react-chartjs-2';
+import buttonStyles from "@/assets/css/buttons.module.css";
+import { calculateAverage } from '@/utils/helperMethod';
 
 const Page = () => {
   const params = useParams();
@@ -54,9 +55,13 @@ const Page = () => {
           <p className="px-1 m-0">Go Back</p>
         </Link>
         <h2 className={`${styles.studentDetailMainHeading}`}>Student Score Details</h2>
+        <div className='text-end mb-3'>
+          <Link href="/add-scores" aria-disabled="false" className={`${buttonStyles.buttonDarkPinkScore}`} styles={{ height: "20px" }}>Add Score</Link>
+        </div>
         <div className="row">
           <h3>{!fetchingData ? student?.name : <Skeleton width={120} />}</h3>
-          <p>Class: {!fetchingData ? student?.class : <Skeleton width={80} />}</p>
+          <p className='mb-1'>Student Id: {!fetchingData ? student?.studentId : <Skeleton width={50} />}</p>
+          <p className='mb-1'>Class: {!fetchingData ? student?.class : <Skeleton width={80} />}</p>
           <div className='Line-graph mb-3'>
             {student && (
               <Line
@@ -115,6 +120,9 @@ const Page = () => {
                 <Skeleton key={index} height={25} width={120} />
               ))
             )}
+            <hr />
+            <p className='fw-bold'>Average: {calculateAverage(student?.scores.jumpPlace.map(score => score.score))}</p>
+            <hr />
           </div>
           <div className="col-md-6">
             <h4 className={`${styles.studentDetailHeading}`}>Jump from Height</h4>
@@ -127,14 +135,23 @@ const Page = () => {
                 <Skeleton key={index} height={25} width={120} />
               ))
             )}
+            <hr />
+            <p className='fw-bold'>Average: {calculateAverage(student?.scores.jumpHeight.map(score => score.score))}</p>
+            <hr />
           </div>
           <div className="col-md-6">
             <h4 className={`${styles.studentDetailHeading}`}>Run</h4>
             {!fetchingData ? (
               student?.scores.run.map((score, index) => (
                 <>
-                  <p key={index}>Score {index + 1}: <span className='fw-bold'>{score.score ? score.score : 'N/A'}</span></p>
-                  <p key={index}>Time {index + 1}: <span className='fw-bold'>{score.time ? score.time : 'N/A'}</span></p>
+                  <div className="row">
+                    <div className="col-md-6">
+                      <p key={index}>Score {index + 1}: <span className='fw-bold'>{score.score ? score.score : 'N/A'}</span></p>
+                    </div>
+                    <div className="col-md-6">
+                      <p key={index}>Time {index + 1}: <span className='fw-bold'>{score.time ? score.time : 'N/A'}</span></p>
+                    </div>
+                  </div>
                 </>
               ))
             ) : (
@@ -142,14 +159,23 @@ const Page = () => {
                 <Skeleton key={index} height={25} width={120} />
               ))
             )}
+            <hr />
+            <p className='fw-bold'>Average: {calculateAverage(student?.scores.run.map(score => score.score))}</p>
+            <hr />
           </div>
           <div className="col-md-6">
             <h4 className={`${styles.studentDetailHeading}`}>Set-up Workout</h4>
             {!fetchingData ? (
               student?.scores.setUp.map((score, index) => (
                 <>
-                  <p key={index}>Score {index + 1}: <span className='fw-bold'>{score.score ? score.score : 'N/A'}</span></p>
-                  <p key={index}>Time {index + 1}: <span className='fw-bold'>{score.time ? score.time : 'N/A'}</span></p>
+                  <div className="row">
+                    <div className="col-md-6">
+                      <p key={index}>Score {index + 1}: <span className='fw-bold'>{score.score ? score.score : 'N/A'}</span></p>
+                    </div>
+                    <div className="col-md-6">
+                      <p key={index}>Time {index + 1}: <span className='fw-bold'>{score.time ? score.time : 'N/A'}</span></p>
+                    </div>
+                  </div>
                 </>
               ))
             ) : (
@@ -157,6 +183,9 @@ const Page = () => {
                 <Skeleton key={index} height={25} width={120} />
               ))
             )}
+            <hr />
+            <p className='fw-bold'>Average: {calculateAverage(student?.scores.setUp.map(score => score.score))}</p>
+            <hr />
           </div>
         </div>
       </div>

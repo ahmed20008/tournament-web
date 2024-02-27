@@ -111,10 +111,34 @@ a.buttonWhitePink[aria-disabled="true"] {
   border-radius: 80px;
   padding: 15px 24px;
 }
+
+.buttonDarkPinkScore {
+  height: 29px;
+  width: 100%;
+  color: #000;
+  background-color: #a4887e;
+  font-family: "ABC-Diatype-Regular";
+  font-size: 16px;
+  font-weight: 400;
+  line-height: normal;
+  text-decoration: none;
+  text-align: center;
+  border: none;
+  border-radius: 80px;
+  padding: 10px 24px;
+}
 button.buttonDarkPink:disabled {
   background-color: #bd9d92;
 }
 a.buttonDarkPink[aria-disabled="true"] {
+  background-color: #bd9d92;
+  pointer-events: none;
+}
+
+button.buttonDarkPinkScore:disabled {
+  background-color: #bd9d92;
+}
+a.buttonDarkPinkScore[aria-disabled="true"] {
   background-color: #bd9d92;
   pointer-events: none;
 }
@@ -179,6 +203,12 @@ a.buttonLightPink[aria-disabled="true"] {
     background-color: #81685f;
   }
   button.buttonDarkPink:not(:disabled):hover {
+    background-color: #81685f;
+  }
+  a.buttonDarkPinkScore:not([aria-disabled="true"]):hover {
+    background-color: #81685f;
+  }
+  button.buttonDarkPinkScore:not(:disabled):hover {
     background-color: #81685f;
   }
 

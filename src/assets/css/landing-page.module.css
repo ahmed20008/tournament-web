@@ -63,6 +63,12 @@
   left: -208px;
 }
 
+.landingPageBtns {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}
+
 @media (max-width: 1366px) {
   .authContentContainer {
     width: 60%;
@@ -129,5 +135,9 @@
   }
   .authContent > p {
     font-size: 15px;
+  }
+  .landingPageBtns {
+    display: grid;
+    gap: 10px;
   }
 }

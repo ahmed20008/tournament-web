@@ -8,6 +8,7 @@ import DashboardStudentTableSkeleton from '@/skeletons/DashboardStudentTableSkel
 import { enqueueSnackbar } from 'notistack';
 import Link from 'next/link';
 import StudentClasses from '@/utils/classAttributes';
+import { getHighestScore } from '@/utils/helperMethod';
 
 const Page = () => {
   const [students, setStudents] = useState([]);
@@ -18,7 +19,6 @@ const Page = () => {
   useEffect(() => {
     fetchData();
   }, [selectedClass]);
-  console.log(students)
 
   const fetchData = async () => {
     setFetchingData(true);
@@ -80,6 +80,28 @@ const Page = () => {
             ))}
           </select>
         </div>
+        {/* <div className="col-md-3 mb-3">
+          <label htmlFor="student-class" className={styles.studentFilterLabel}>
+            Filter by Score
+          </label>
+          <select
+            id="student-class"
+            type="text"
+            className={`form-control ${formStyles.customSelectField} form-select`}
+          >
+            <option value="">Filter by Score</option>
+            <option value="">Filter by highest in jump from place</option>
+            <option value="">Filter by lowest in jump from place</option>
+            <option value="">Filter by highest in jump from height</option>
+            <option value="">Filter by lowest in jump from height</option>
+            <option value="">Filter by highest in run</option>
+            <option value="">Filter by lowest in run</option>
+            <option value="">Filter by highest in set-up</option>
+            <option value="">Filter by lowest in set-up</option>
+            <option value="">Filter by highest in all sport</option>
+            <option value="">Filter by lowest in all sport</option>
+          </select>
+        </div> */}
       </div>
       <div className={styles.studentTableContainer}>
         <div className={styles.studentTable}>
@@ -90,6 +112,10 @@ const Page = () => {
                 <th scope="col" className='text-center'>Student Id</th>
                 <th scope="col" className='text-center'>Student Name</th>
                 <th scope="col" className='text-center'>Student Class</th>
+                <th scope="col" className='text-center'>jump from place</th>
+                <th scope="col" className='text-center'>jump from height</th>
+                <th scope="col" className='text-center'>run</th>
+                <th scope="col" className='text-center'>set-up</th>
                 <th scope="col" className='text-center'></th>
               </tr>
             </thead>
@@ -97,9 +123,13 @@ const Page = () => {
               {students.map((student, index) => (
                 <tr className="align-middle" key={student.id}>
                   <td className='text-center'>{index + 1}</td>
-                  <td className='text-center'>{student.studentId}</td>
-                  <td className='text-center'>{student.name}</td>
-                  <td className='text-center'>{student.class}</td>
+                  <td className='text-center'>{student.studentId ?? 'N/A'}</td>
+                  <td className='text-center'>{student.name ?? 'N/A'}</td>
+                  <td className='text-center'>{student.class ?? 'N/A'}</td>
+                  <td className='text-center'>{getHighestScore(student.scores.jumpPlace) ?? '--'}</td>
+                  <td className='text-center'>{getHighestScore(student.scores.jumpHeight) ?? '--'}</td>
+                  <td className='text-center'>{getHighestScore(student.scores.run) ?? '--'}</td>
+                  <td className='text-center'>{getHighestScore(student.scores.setUp) ?? '--'}</td>
                   <td className='text-center'>
                     <Link href={`/dashboard/${student.studentId}`}>
                       <button className={`${styles.viewBtn}`}>
