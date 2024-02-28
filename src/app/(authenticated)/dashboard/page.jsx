@@ -16,6 +16,7 @@ const Page = () => {
   const [fetchingData, setFetchingData] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedClass, setSelectedClass] = useState('');
+  const [selectedScore, setSelectedScore] = useState('');
 
   useEffect(() => {
     fetchData();
@@ -26,25 +27,43 @@ const Page = () => {
     try {
       const studentsRef = collection(db, "students");
       let q = query(studentsRef, orderBy('name'));
-  
+
+      // search by student name 
       if (searchTerm.trim() !== "") {
         q = query(studentsRef, orderBy('name'), where('name', '>=', searchTerm), where('name', '<=', searchTerm + '\uf8ff'));
       }
-  
+
+      // filter by student class 
       if (selectedClass !== "") {
         q = query(studentsRef, orderBy('name'), where('class', '==', selectedClass));
       }
-  
+
       const querySnapshot = await getDocs(q);
       const studentData = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setStudents(studentData);
+      // setStudents(studentData);
+
+      //  filter by highest score code  
+      if (selectedScore !== "") {
+        const filteredStudents = studentData.filter(student => {
+          const scores = student.scores[selectedScore];
+          if (scores && scores.length > 0) {
+            const highestScore = Math.max(...scores.map(score => parseInt(score.score)));
+            return highestScore > 0;
+          }
+          return false;
+        });
+        setStudents(filteredStudents);
+      } else {
+        setStudents(studentData);
+      }
+
     } catch (error) {
       enqueueSnackbar(`Error fetching data: ${error}`, { variant: "error" });
     } finally {
       setFetchingData(false);
     }
   };
-  
+
 
   const handleSearch = () => {
     fetchData();
@@ -84,6 +103,24 @@ const Page = () => {
             ))}
           </select>
         </div>
+        <div className='col-md-3 mb-3'>
+          <label htmlFor="student-class" className={styles.studentFilterLabel}>
+            Filter by Score
+          </label>
+          <select
+            id="student-class"
+            type="text"
+            className={`form-control ${formStyles.customSelectField} form-select`}
+            value={selectedScore}
+            onChange={(e) => setSelectedScore(e.target.value)}
+          >
+            <option value="">Filter by Score</option>
+            <option value="jumpPlace">highest in jump from place</option>
+            <option value="jumpHeight">highest in jump from height</option>
+            <option value="run">highest in run</option>
+            <option value="setUp">highest in set-up</option>
+          </select>
+        </div>
         <div className="col-md-3 mb-3 d-flex align-items-end">
           <button className={buttonStyles.buttonDarkPink} onClick={handleSearch}>Search</button>
         </div>
@@ -97,10 +134,10 @@ const Page = () => {
                 <th scope="col" className='text-center'>Student Id</th>
                 <th scope="col" className='text-center'>Student Name</th>
                 <th scope="col" className='text-center'>Student Class</th>
-                <th scope="col" className='text-center'>jump from place</th>
-                <th scope="col" className='text-center'>jump from height</th>
-                <th scope="col" className='text-center'>run</th>
-                <th scope="col" className='text-center'>set-up</th>
+                <th scope="col" className='text-center'>highest jump place</th>
+                <th scope="col" className='text-center'>highest jump height</th>
+                <th scope="col" className='text-center'>highest run</th>
+                <th scope="col" className='text-center'>highest set-up</th>
                 <th scope="col" className='text-center'></th>
               </tr>
             </thead>
