@@ -9,27 +9,32 @@ import { enqueueSnackbar } from 'notistack';
 import Link from 'next/link';
 import StudentClasses from '@/utils/classAttributes';
 import { getHighestScore } from '@/utils/helperMethod';
+import buttonStyles from '@/assets/css/buttons.module.css';
 
 const Page = () => {
   const [students, setStudents] = useState([]);
   const [fetchingData, setFetchingData] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedClass, setSelectedClass] = useState("");
+  const [selectedClass, setSelectedClass] = useState('');
 
   useEffect(() => {
     fetchData();
-  }, [selectedClass]);
+  }, []);
 
   const fetchData = async () => {
     setFetchingData(true);
     try {
       const studentsRef = collection(db, "students");
-      let q = query(studentsRef, orderBy('name'), where('name', '>=', searchTerm), where('name', '<=', searchTerm + '\uf8ff'));
-
-      if (selectedClass !== "") {
-        q = query(studentsRef, orderBy('name'), where('class', '==', selectedClass), where('name', '>=', searchTerm), where('name', '<=', searchTerm + '\uf8ff'));
+      let q = query(studentsRef, orderBy('name'));
+  
+      if (searchTerm.trim() !== "") {
+        q = query(studentsRef, orderBy('name'), where('name', '>=', searchTerm), where('name', '<=', searchTerm + '\uf8ff'));
       }
-
+  
+      if (selectedClass !== "") {
+        q = query(studentsRef, orderBy('name'), where('class', '==', selectedClass));
+      }
+  
       const querySnapshot = await getDocs(q);
       const studentData = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setStudents(studentData);
@@ -38,6 +43,11 @@ const Page = () => {
     } finally {
       setFetchingData(false);
     }
+  };
+  
+
+  const handleSearch = () => {
+    fetchData();
   };
 
   return (
@@ -56,11 +66,6 @@ const Page = () => {
             placeholder="Enter Student Name"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                fetchData();
-              }
-            }}
           />
         </div>
         <div className="col-md-3 mb-3">
@@ -69,7 +74,6 @@ const Page = () => {
           </label>
           <select
             id="student-class"
-            type="text"
             className={`form-control ${formStyles.customSelectField} form-select`}
             value={selectedClass}
             onChange={(e) => setSelectedClass(e.target.value)}
@@ -80,28 +84,9 @@ const Page = () => {
             ))}
           </select>
         </div>
-        {/* <div className="col-md-3 mb-3">
-          <label htmlFor="student-class" className={styles.studentFilterLabel}>
-            Filter by Score
-          </label>
-          <select
-            id="student-class"
-            type="text"
-            className={`form-control ${formStyles.customSelectField} form-select`}
-          >
-            <option value="">Filter by Score</option>
-            <option value="">Filter by highest in jump from place</option>
-            <option value="">Filter by lowest in jump from place</option>
-            <option value="">Filter by highest in jump from height</option>
-            <option value="">Filter by lowest in jump from height</option>
-            <option value="">Filter by highest in run</option>
-            <option value="">Filter by lowest in run</option>
-            <option value="">Filter by highest in set-up</option>
-            <option value="">Filter by lowest in set-up</option>
-            <option value="">Filter by highest in all sport</option>
-            <option value="">Filter by lowest in all sport</option>
-          </select>
-        </div> */}
+        <div className="col-md-3 mb-3 d-flex align-items-end">
+          <button className={buttonStyles.buttonDarkPink} onClick={handleSearch}>Search</button>
+        </div>
       </div>
       <div className={styles.studentTableContainer}>
         <div className={styles.studentTable}>
