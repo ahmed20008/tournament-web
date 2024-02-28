@@ -1,49 +1,57 @@
 'use client'
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import formStyles from "@/assets/css/form-elements.module.css";
 import styles from "@/assets/css/add-student.module.css";
 import buttonStyles from "@/assets/css/buttons.module.css?v1.1";
-import { collection, getDoc, getDocs, updateDoc, doc, query, where } from "firebase/firestore";
+import { collection, getDocs, updateDoc, doc, query, where } from "firebase/firestore";
 import { db } from '@/config';
 import CircularProgress from '@/components/CircularProgress';
 import { enqueueSnackbar } from "notistack";
 import { calculateAverage } from '@/utils/helperMethod';
+import { useRouter } from 'next/navigation';
 
 const Page = () => {
 
   const [loading, setLoading] = useState(false);
-  const [students, setStudents] = useState([]);
-  const [addStudent, setAddStudent] = useState({ name: '' });
+  const [student, setStudent] = useState([]);
+  const [findStudent, setFindStudent] = useState([]);
   const [selectedSport, setSelectedSport] = useState('');
   const [scoreValues, setScoreValues] = useState([]);
   const [timeValues, setTimeValues] = useState([]);
+  const [check, setCheck] = useState(true);
+  const router = useRouter();
 
-  useEffect(() => {
-    const fetchStudents = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(db, 'students'));
-        const studentList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        setStudents(studentList);
-      } catch (error) {
-        enqueueSnackbar(`Error fetching students: ${error}`, { variant: "error" })
+  const handleStudent = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const studentQuery = query(collection(db, 'students'), where('studentId', '==', findStudent.studentId));
+      const studentQuerySnapshot = await getDocs(studentQuery);
+      if (!studentQuerySnapshot.empty) {
+        const studentDocSnapshot = studentQuerySnapshot.docs[0];
+        const studentData = { id: studentDocSnapshot.id, ...studentDocSnapshot.data() };
+        setLoading(false);
+        setCheck(false);
+        setStudent(studentData);
+        setSelectedSport('');
+        setScoreValues([]);
+        setTimeValues([]);
+      } else {
+        throw new Error('Student with this ID doesnot exists!');
       }
-    };
-    fetchStudents();
-  }, []);
-
-  const handleStudentChange = (e) => {
-    setAddStudent({ name: e.target.value });
-    setSelectedSport('');
-    setScoreValues([]);
-    setTimeValues([]);
+    } catch (error) {
+      enqueueSnackbar(`${error}`, { variant: "error" })
+      setLoading(false);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSportChange = (sport) => {
     setSelectedSport(sport);
 
-    const selectedStudent = students.find(student => student.name === addStudent.name);
-    if (selectedStudent && selectedStudent.scores && selectedStudent.scores[sport]) {
-      const sportScores = selectedStudent.scores[sport];
+    if (student && student.scores && student.scores[sport]) {
+      const sportScores = student.scores[sport];
       const newScoreValues = Array(4).fill('');
       let newTimeValues = [];
       if (sport === 'run' || sport === 'setUp') {
@@ -76,25 +84,17 @@ const Page = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const selectedStudent = students.find(student => student.name === addStudent.name);
-      if (!selectedStudent) {
-        throw new Error('Selected student not found.');
-      }
-      const studentRef = doc(db, 'students', selectedStudent.id);
-
+      const studentRef = doc(db, 'students', student.id);
       const updatedScores = {
         [selectedSport]: scoreValues.map((score, index) => {
           const time = (selectedSport === 'run' || selectedSport === 'setUp') ? timeValues[index] : undefined;
-          return { score, ...(time !== undefined && { time }) }; // Include time if it's defined
+          return { score, ...(time !== undefined && { time }) };
         })
       };
 
       await updateDoc(studentRef, { [`scores.${selectedSport}`]: updatedScores[selectedSport] });
-      const updatedDocSnapshot = await getDoc(studentRef);
-      const updatedStudent = { id: updatedDocSnapshot.id, ...updatedDocSnapshot.data() };
-      setStudents(students.map(student => student.id === updatedStudent.id ? updatedStudent : student));
-
-      enqueueSnackbar('Scores updated successfully!', { variant: "success" });
+      enqueueSnackbar('Scores added successfully!', { variant: "success" });
+      router.push(`/dashboard/${student.studentId}`);
     } catch (error) {
       enqueueSnackbar(`${error}`, { variant: "error" });
     } finally {
@@ -108,28 +108,36 @@ const Page = () => {
       <div className="row">
         <div className="col-md-8 mx-auto">
           <div className={`card ${styles.addStudentCard}`}>
-            <form className="w-75 mx-auto" onSubmit={handleSubmit}>
+            <form className="w-75 mx-auto" onSubmit={handleStudent}>
               <div className="mt-5 mb-3 mx-4">
-                <select
+                <input
                   required
-                  className={`${formStyles.customSelectField} w-100 form-select`}
-                  id="name"
-                  aria-label="name"
-                  value={addStudent.name}
-                  onChange={handleStudentChange}
-                >
-                  <option value="">Select Student</option>
-                  {students.map(student => (
-                    <option key={student.id} value={student.name}>{student.name}</option>
-                  ))}
-                </select>
+                  className={`${formStyles.inputFieldWhite}`}
+                  id="studentId"
+                  aria-label="studentId"
+                  type="text"
+                  placeholder="Enter Student Id"
+                  value={findStudent.studentId}
+                  onChange={(e) => setFindStudent({ ...findStudent, studentId: e.target.value })}
+                  disabled={!check}
+                />
               </div>
+              {(check) &&
+                <div className="mt-3 mb-3 mx-4">
+                  <button type="submit" className={`${buttonStyles.buttonDarkPink} `}>
+                    {!loading ? "Find Student" : <CircularProgress width={22} height={22} />}
+                  </button>
+                </div>
+              }
+            </form>
+            <form className="w-75 mx-auto" onSubmit={handleSubmit}>
               <div className="mt-2 mb-3 mx-4">
                 <select
                   required
                   className={`${formStyles.customSelectField} w-100 form-select`}
                   value={selectedSport}
                   onChange={(e) => handleSportChange(e.target.value)}
+                  disabled={check}
                 >
                   <option value="">Select Sport</option>
                   <option value="jumpHeight">Jump from Height</option>
@@ -180,11 +188,13 @@ const Page = () => {
                   <p>Automatic Grade: {calculateAverage(scoreValues)}</p>
                 </div>
               )}
-              <div className="mt-3 mb-3 mx-4">
-                <button type="submit" className={`${buttonStyles.buttonDarkPink} `}>
-                  {!loading ? "Update Record" : <CircularProgress width={22} height={22} />}
-                </button>
-              </div>
+              {(!check) &&
+                <div className="mt-3 mb-3 mx-4">
+                  <button type="submit" className={`${buttonStyles.buttonDarkPink} `}>
+                    {!loading ? "Add Score" : <CircularProgress width={22} height={22} />}
+                  </button>
+                </div>
+              }
             </form>
           </div>
         </div>
