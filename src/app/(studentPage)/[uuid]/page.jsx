@@ -10,7 +10,7 @@ import { Line } from 'react-chartjs-2';
 import buttonStyles from "@/assets/css/buttons.module.css";
 import Link from 'next/link';
 import { Chart as ChartJS } from 'chart.js/auto';
-import { calculateAverage } from '@/utils/helperMethod';
+import { calculateAverage, calculateMarks } from '@/utils/helperMethod';
 
 const Page = () => {
   const params = useParams();
@@ -120,6 +120,7 @@ const Page = () => {
             )}
             <hr />
             <p className='fw-bold'>Average: {student?.scores && calculateAverage(student?.scores?.jumpPlace.map(score => score.score))}</p>
+            <p className='fw-bold'>Marks: {student?.scores && calculateMarks(calculateAverage(student?.scores?.jumpPlace.map(score => score.score)))}</p>
             <hr />
           </div>
           <div className="col-md-6">
@@ -135,6 +136,7 @@ const Page = () => {
             )}
             <hr />
             <p className='fw-bold'>Average: {student?.scores && calculateAverage(student?.scores?.jumpHeight.map(score => score.score))}</p>
+            <p className='fw-bold'>Marks: {student?.scores && calculateMarks(calculateAverage(student?.scores?.jumpHeight.map(score => score.score)))}</p>
             <hr />
           </div>
           <div className="col-md-6">
@@ -153,6 +155,7 @@ const Page = () => {
             )}
             <hr />
             <p className='fw-bold'>Average: {student?.scores && calculateAverage(student?.scores?.run.map(score => score.score))}</p>
+            <p className='fw-bold'>Marks: {student?.scores && calculateMarks(calculateAverage(student?.scores?.run.map(score => score.score)))}</p>
             <hr />
           </div>
           <div className="col-md-6">
@@ -171,6 +174,7 @@ const Page = () => {
             )}
             <hr />
             <p className='fw-bold'>Average: {student?.scores && calculateAverage(student?.scores?.setUp.map(score => score.score))}</p>
+            <p className='fw-bold'>Marks: {student?.scores && calculateMarks(calculateAverage(student?.scores?.setUp.map(score => score.score)))}</p>
             <hr />
           </div>
         </div>
