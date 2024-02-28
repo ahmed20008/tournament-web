@@ -45,7 +45,6 @@ const Page = () => {
     }
   };
   
-
   const handleSearch = () => {
     fetchData();
   };
@@ -97,10 +96,10 @@ const Page = () => {
                 <th scope="col" className='text-center'>Student Id</th>
                 <th scope="col" className='text-center'>Student Name</th>
                 <th scope="col" className='text-center'>Student Class</th>
-                <th scope="col" className='text-center'>jump from place</th>
-                <th scope="col" className='text-center'>jump from height</th>
-                <th scope="col" className='text-center'>run</th>
-                <th scope="col" className='text-center'>set-up</th>
+                <th scope="col" className='text-center'>highest jump place</th>
+                <th scope="col" className='text-center'>highest jump height</th>
+                <th scope="col" className='text-center'>highest run</th>
+                <th scope="col" className='text-center'>highest set-up</th>
                 <th scope="col" className='text-center'></th>
               </tr>
             </thead>
