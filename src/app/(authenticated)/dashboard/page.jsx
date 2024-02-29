@@ -18,6 +18,17 @@ const Page = () => {
   const [selectedClass, setSelectedClass] = useState('');
   const [selectedScore, setSelectedScore] = useState('');
 
+  const [selectedClasses, setSelectedClasses] = useState([]);
+
+  const handleClassCheckboxChange = (classItem) => {
+    if (selectedClasses.includes(classItem)) {
+      setSelectedClasses(selectedClasses.filter(item => item !== classItem));
+    } else {
+      setSelectedClasses([...selectedClasses, classItem]);
+    }
+  };
+
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -25,47 +36,48 @@ const Page = () => {
   const fetchData = async () => {
     setFetchingData(true);
     try {
-      const studentsRef = collection(db, "students");
-      let q = query(studentsRef, orderBy('name'));
+        const studentsRef = collection(db, "students");
+        let q = studentsRef;
 
-      // search by student name 
-      if (searchTerm.trim() !== "") {
-        q = query(studentsRef, orderBy('name'), where('name', '>=', searchTerm), where('name', '<=', searchTerm + '\uf8ff'));
-      }
+        // Apply search by student name 
+        if (searchTerm.trim() !== "") {
+            q = query(q, orderBy('name'), where('name', '>=', searchTerm), where('name', '<=', searchTerm + '\uf8ff'));
+        }
 
-      // filter by student class 
-      if (selectedClass !== "") {
-        q = query(studentsRef, orderBy('name'), where('class', '==', selectedClass));
-      }
+        // Apply filter by student class 
+        if (selectedClasses.length > 0) {
+            q = query(q, where('class', 'in', selectedClasses));
+        }
 
-      const querySnapshot = await getDocs(q);
-      const studentData = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      // setStudents(studentData);
+        const querySnapshot = await getDocs(q);
+        const studentData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-      //  filter by highest score code  
-      if (selectedScore !== "") {
-        const filteredStudents = studentData.filter(student => {
-          const scores = student.scores[selectedScore];
-          if (scores && scores.length > 0) {
-            const highestScore = Math.max(...scores.map(score => parseInt(score.score)));
-            return highestScore > 0;
-          }
-          return false;
-        });
-        setStudents(filteredStudents);
-      } else {
-        setStudents(studentData);
-      }
-
+        // Apply filter by highest score code  
+        if (selectedScore !== "") {
+            const filteredStudents = studentData.filter(student => {
+                const scores = student.scores[selectedScore];
+                if (scores && scores.length > 0) {
+                    const highestScore = Math.max(...scores.map(score => parseInt(score.score)));
+                    return highestScore > 0;
+                }
+                return false;
+            });
+            setStudents(filteredStudents);
+        } else {
+            setStudents(studentData);
+        }
     } catch (error) {
-      enqueueSnackbar(`Error fetching data: ${error}`, { variant: "error" });
+        enqueueSnackbar(`Error fetching data: ${error}`, { variant: "error" });
     } finally {
-      setFetchingData(false);
+        setFetchingData(false);
     }
-  };
+};
+  
+  
 
 
   const handleSearch = () => {
+    console.log(selectedClasses)
     fetchData();
   };
 
@@ -94,14 +106,31 @@ const Page = () => {
           <select
             id="student-class"
             className={`form-control ${formStyles.customSelectField} form-select`}
-            value={selectedClass}
-            onChange={(e) => setSelectedClass(e.target.value)}
+            multiple={true}
+            value={selectedClasses}
+            onChange={(e) => setSelectedClasses(Array.from(e.target.selectedOptions, option => option.value))}
           >
-            <option value="">Filter by Class</option>
             {StudentClasses.map((classItem, index) => (
               <option key={index} value={classItem}>{classItem}</option>
             ))}
           </select>
+          <div>
+            {StudentClasses.map((classItem, index) => (
+              <div key={index} className="form-check">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  id={`class-checkbox-${index}`}
+                  value={classItem}
+                  checked={selectedClasses.includes(classItem)}
+                  onChange={() => handleClassCheckboxChange(classItem)}
+                />
+                <label className="form-check-label" htmlFor={`class-checkbox-${index}`}>
+                  {classItem}
+                </label>
+              </div>
+            ))}
+          </div>
         </div>
         <div className='col-md-3 mb-3'>
           <label htmlFor="student-class" className={styles.studentFilterLabel}>
