@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, useEffect } from 'react';
-import { collection, getDocs, query, where, orderBy, deleteDoc, doc  } from 'firebase/firestore';
+import { collection, getDocs, query, where, orderBy, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '@/config';
 import styles from "@/assets/css/dashboard.module.css";
 import formStyles from "@/assets/css/form-elements.module.css";
@@ -28,9 +28,8 @@ const Page = () => {
       const studentsRef = collection(db, "students");
       let q = query(studentsRef, orderBy('name'));
 
-      // search by student name 
       if (searchTerm.trim() !== "") {
-        q = query(studentsRef, orderBy('name'), where('name', '>=', searchTerm), where('name', '<=', searchTerm + '\uf8ff'));
+        q = query(studentsRef, where('studentId', '==', searchTerm));
       }
 
       // filter by student class 
@@ -65,12 +64,15 @@ const Page = () => {
   };
 
   const handleDelete = async (id) => {
-    try {
-      await deleteDoc(doc(db, "students", id));
-      enqueueSnackbar('Student deleted successfully!', { variant: "success" });
-      fetchData();
-    } catch (error) {
-      enqueueSnackbar(`Error deleting student: ${error}`, { variant: "error" });
+    const confirmDelete = window.confirm("Are you sure you want to delete this student?");
+    if (confirmDelete) {
+      try {
+        await deleteDoc(doc(db, "students", id));
+        enqueueSnackbar('Student deleted successfully!', { variant: "success" });
+        fetchData();
+      } catch (error) {
+        enqueueSnackbar(`Error deleting student: ${error}`, { variant: "error" });
+      }
     }
   };
 
@@ -83,15 +85,15 @@ const Page = () => {
       <h3 className={styles.dashboardHeading}>Students Table</h3>
       <div className='row'>
         <div className="col-md-3 mb-3">
-          <label htmlFor="student-name" className={styles.studentFilterLabel}>
-            Student Name
+          <label htmlFor="student-id" className={styles.studentFilterLabel}>
+            Student Id
           </label>
           <input
             autoComplete="off"
-            id="student-name"
+            id="student-id"
             type="text"
             className={`form-control ${formStyles.inputFieldWhite} ${styles.studentFilterInput}`}
-            placeholder="Enter Student Name"
+            placeholder="Enter Student Id"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -153,14 +155,46 @@ const Page = () => {
             <tbody>
               {students.map((student, index) => (
                 <tr className="align-middle" key={student.id}>
-                  <td className='text-center'>{index + 1}</td>
-                  <td className='text-center'>{student.studentId ?? 'N/A'}</td>
-                  <td className='text-center'>{student.name ?? 'N/A'}</td>
-                  <td className='text-center'>{student.class ?? 'N/A'}</td>
-                  <td className='text-center'>{getHighestScore(student.scores.jumpPlace) ?? '--'}</td>
-                  <td className='text-center'>{getHighestScore(student.scores.jumpHeight) ?? '--'}</td>
-                  <td className='text-center'>{getHighestScore(student.scores.run) ?? '--'}</td>
-                  <td className='text-center'>{getHighestScore(student.scores.setUp) ?? '--'}</td>
+                  <td className='text-center'>
+                    <Link href={`/dashboard/${student.studentId}`}>
+                      {index + 1}
+                    </Link>
+                  </td>
+                  <td className='text-center'>
+                    <Link href={`/dashboard/${student.studentId}`}>
+                      {student.studentId ?? 'N/A'}
+                    </Link>
+                  </td>
+                  <td className='text-center'>
+                    <Link href={`/dashboard/${student.studentId}`}>
+                      {student.name ?? 'N/A'}
+                    </Link>
+                  </td>
+                  <td className='text-center'>
+                    <Link href={`/dashboard/${student.studentId}`}>
+                      {student.class ?? 'N/A'}
+                    </Link>
+                  </td>
+                  <td className='text-center'>
+                    <Link href={`/dashboard/${student.studentId}`}>
+                      {getHighestScore(student.scores.jumpPlace) ?? '--'}
+                    </Link>
+                  </td>
+                  <td className='text-center'>
+                    <Link href={`/dashboard/${student.studentId}`}>
+                      {getHighestScore(student.scores.jumpHeight) ?? '--'}
+                    </Link>
+                  </td>
+                  <td className='text-center'>
+                    <Link href={`/dashboard/${student.studentId}`}>
+                      {getHighestScore(student.scores.run) ?? '--'}
+                    </Link>
+                  </td>
+                  <td className='text-center'>
+                    <Link href={`/dashboard/${student.studentId}`}>
+                      {getHighestScore(student.scores.setUp) ?? '--'}
+                    </Link>
+                  </td>
                   <td className='text-center'>
                     <button onClick={() => handleDelete(student.id)} className={`${styles.deleteBtn}`}>
                       Delete

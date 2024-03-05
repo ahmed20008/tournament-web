@@ -3,6 +3,7 @@ import Image from "next/image";
 import Login from "./Login";
 import landingImage from "@/assets/images/landing-page-image.jpg";
 import imageShadow from "@/assets/images/auth-image-shadow.png";
+import Link from "next/link";
 
 export const metadata = {
   title: "Login - Teacher",
@@ -16,6 +17,11 @@ const page = () => {
           <h1 className="mb-35">Login as Teacher</h1>
           <p className="mb-2">Welcome to the Tournament App, your all-in-one platform for managing sports tournaments effortlessly. Log in to stay updated on scores, track progress, and engage with your team like never before!</p>
           <Login />
+          <div className="text-center pt-3">
+            <Link href={'/'} className="text-dark">
+              Go back to home page
+            </Link>
+          </div>
         </div>
       </div>
       <div

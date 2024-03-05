@@ -33,8 +33,8 @@ const DashboardStudentTableSkeleton = ({ rows }) => {
               <Skeleton height={20} width={80} />
             </td>
             <td className='text-center'>
-              <button className={`${styles.viewBtn}`} disabled>
-                View
+              <button className={`${styles.deleteBtn}`} disabled>
+                Delete
               </button>
             </td>
           </tr>

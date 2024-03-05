@@ -88,6 +88,11 @@
   margin: 0px;
   border-bottom: 1px solid #f0f0f0;
 }
+.studentTable a {
+  text-decoration: none;
+  color: #000;
+}
+
 .emptyTable {
   min-height: 192px;
   height: 80%;
