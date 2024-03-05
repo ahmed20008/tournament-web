@@ -24,6 +24,6 @@ export const calculateMarks = (average) => {
   } else if (average > 50) {
     return 100;
   } else {
-    return 100;
+    return 'N/A';
   }
 };
