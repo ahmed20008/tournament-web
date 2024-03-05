@@ -83,12 +83,10 @@ const Page = () => {
     fetchData();
   };
 
-  // Get current students
   const indexOfLastStudent = currentPage * studentsPerPage;
   const indexOfFirstStudent = indexOfLastStudent - studentsPerPage;
   const currentStudents = students.slice(indexOfFirstStudent, indexOfLastStudent);
 
-  // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
@@ -168,7 +166,7 @@ const Page = () => {
                 <tr className="align-middle" key={student.id}>
                   <td className='text-center'>
                     <Link href={`/dashboard/${student.studentId}`}>
-                    {(currentPage - 1) * studentsPerPage + index + 1}
+                      {(currentPage - 1) * studentsPerPage + index + 1}
                     </Link>
                   </td>
                   <td className='text-center'>
