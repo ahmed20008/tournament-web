@@ -191,7 +191,7 @@ const Sidebar = () => {
                   <span className={` sidebarSpan showSidebarSpan`}>Dashboard</span>
                 </Link>
               </li>
-              <li className={`mb-2 ${styles.listItem} ${pathArray[0] === "add-student" ? styles.sidebarActive : ""}`}>
+              {/* <li className={`mb-2 ${styles.listItem} ${pathArray[0] === "add-student" ? styles.sidebarActive : ""}`}>
                 <Link className="sidebarLink" href="/add-student">
                   <div>
                     <svg className={styles.userIcon} width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -224,8 +224,8 @@ const Sidebar = () => {
                   </div>
                   <span className={` sidebarSpan showSidebarSpan`}>Add Score</span>
                 </Link>
-              </li>
-              {/* <div className="mb-2">
+              </li> */}
+              <div className="mb-2">
                 <li className={`${styles.listItem} ${pathArray[0] === "members" || pathArray[0] === "non-members" ? styles.sidebarActive : ""}`}>
                   <button className={`${styles.customaccordion} ${isActive ? styles.active : ""}`} onClick={handleAccordionClick}>
                     <div>
@@ -256,7 +256,7 @@ const Sidebar = () => {
                     </Link>
                   </div>
                 </div>
-              </div> */}
+              </div>
               <li className={`mb-2 ${styles.listItem}`}>
                 <button onClick={handleLogout}>
                   <div>
