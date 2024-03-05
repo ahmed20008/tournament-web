@@ -109,7 +109,7 @@ const Page = () => {
         <div className="col-md-8 mx-auto">
           <div className={`card ${styles.addStudentCard}`}>
             <form className="w-75 mx-auto" onSubmit={handleStudent}>
-              <div className="mt-5 mb-3 mx-4">
+              <div className="mt-5 mb-3">
                 <input
                   required
                   className={`${formStyles.inputFieldWhite}`}
@@ -123,7 +123,7 @@ const Page = () => {
                 />
               </div>
               {(check) &&
-                <div className="mt-3 mb-3 mx-4">
+                <div className="mt-3 mb-3">
                   <button type="submit" className={`${buttonStyles.buttonDarkPink} `}>
                     {!loading ? "Find Student" : <CircularProgress width={22} height={22} />}
                   </button>
@@ -131,7 +131,7 @@ const Page = () => {
               }
             </form>
             <form className="w-75 mx-auto" onSubmit={handleSubmit}>
-              <div className="mt-2 mb-3 mx-4">
+              <div className="mt-2 mb-3">
                 <select
                   required
                   className={`${formStyles.customSelectField} w-100 form-select`}
@@ -147,7 +147,7 @@ const Page = () => {
                 </select>
               </div>
               {selectedSport && (
-                <div className='mb-3 mx-4'>
+                <div className='mb-3'>
                   {/* <h5 className={`${styles.sportHeading}`}>{selectedSport}</h5> */}
                   {scoreValues.map((value, index) => (
                     <>
@@ -158,7 +158,7 @@ const Page = () => {
                         key={index}
                         type="number"
                         value={value}
-                        className={`${formStyles.inputFieldWhite} mb-3`}
+                        className={`${formStyles.inputFieldWhite} mb-3 w-100`}
                         onChange={(e) => handleScoreChange(index, e.target.value)}
                         required={true}
                         min={0}
@@ -189,7 +189,7 @@ const Page = () => {
                 </div>
               )}
               {(!check) &&
-                <div className="mt-3 mb-3 mx-4">
+                <div className="mt-3 mb-3">
                   <button type="submit" className={`${buttonStyles.buttonDarkPink} `}>
                     {!loading ? "Add Score" : <CircularProgress width={22} height={22} />}
                   </button>

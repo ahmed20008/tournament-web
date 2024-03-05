@@ -51,14 +51,17 @@ const Page = () => {
   return (
     <>
       <div className={`${styles.detailPageContainer}`}>
-        <Link href="/dashboard" className={`d-flex flex-row align-items-center ${styles.headerGoBack}`}>
-          <ArrowHeadIcon />
-          <p className="px-1 m-0">Go Back</p>
-        </Link>
-        <h2 className={`${styles.studentDetailMainHeading}`}>Student Score Details</h2>
-        <div className='text-end mb-3'>
-          <Link href={`/add-scores/${student?.studentId}`} aria-disabled="false" className={`${buttonStyles.buttonDarkPinkScore}`} styles={{ height: "20px" }}>Add Score</Link>
+        <div className='d-flex flex-row justify-content-between align-items-center my-3'>
+          <Link href="/dashboard" className={`d-flex flex-row align-items-center ${styles.headerGoBack}`}>
+            <ArrowHeadIcon />
+            <p className="px-1 m-0">Go Back</p>
+          </Link>
+          <div className='text-end'>
+            <Link href={`/add-scores/${student?.studentId}`} aria-disabled="false" className={`${buttonStyles.buttonDarkPinkScore}`} styles={{ height: "20px" }}>Add Score</Link>
+          </div>
         </div>
+        <h2 className={`${styles.studentDetailMainHeading}`}>Student Score Details</h2>
+
         <div className="row">
           <h3>{!fetchingData ? student?.name : <Skeleton width={120} />}</h3>
           <p className='mb-1'>Student Id: {!fetchingData ? student?.studentId : <Skeleton width={50} />}</p>

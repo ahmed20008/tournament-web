@@ -6,13 +6,11 @@
 .layoutPinned {
   margin-left: 229px;
   transition: margin 0.3s;
-  background-color: #1d1c1c;
 }
 
 .layoutUnpinned {
   margin-left: 110px;
   transition: margin 0.3s;
-  background-color: #1d1c1c;
 }
 
 .hideSidebarSpan {
@@ -36,12 +34,10 @@
 @media (max-width: 1199px) {
   .layoutPinned {
     margin-left: 0px;
-    padding-left: 20px;
   }
 
   .layoutUnpinned {
     margin-left: 0px;
-    padding-left: 20px;
   }
   .sidebarContentPinned {
     width: 100vw;

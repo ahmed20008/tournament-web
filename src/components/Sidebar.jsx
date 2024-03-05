@@ -151,6 +151,7 @@ const Sidebar = () => {
     sessionStorage.removeItem('user')
     deleteCookie(`${process.env.NEXT_PUBLIC_NAME}_token`);
     router.push("/");
+    window.location.reload();
   };
 
   const handleAccordionClick = () => {

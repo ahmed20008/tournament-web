@@ -125,7 +125,7 @@ const Page = () => {
         </div>
         <div className='col-md-3 mb-3'>
           <label htmlFor="student-class" className={styles.studentFilterLabel}>
-            Filter by Score
+            Sort by Score
           </label>
           <select
             id="student-class"
@@ -134,7 +134,7 @@ const Page = () => {
             value={selectedScore}
             onChange={(e) => setSelectedScore(e.target.value)}
           >
-            <option value="">Filter by Score</option>
+            <option value="">Sort by Score</option>
             <option value="jumpPlace">highest in jump from place</option>
             <option value="jumpHeight">highest in jump from height</option>
             <option value="run">highest in run</option>

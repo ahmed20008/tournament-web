@@ -51,11 +51,11 @@ const Page = () => {
     <>
       <div className={`${styles.detailPageContainer}`}>
         <div className='text-end'>
-          <Link href="/login-student" className={`${buttonStyles.buttonDarkPink}`} style={{ width: "120px" }}>
+          <Link href="/login-student" className={`${buttonStyles.buttonDarkPinkScore}`} styles={{ height: "20px" }}>
             Logout
           </Link>
         </div>
-        <h2 className={`${styles.studentDetailMainHeading}`}>Student Score Details</h2>
+        <h2 className={`${styles.studentDetailMainHeading} mt-3`}>Student Score Details</h2>
         <div className="row">
           <h3>{!fetchingData ? student?.name : <Skeleton width={120} />}</h3>
           <p>Student Id: {!fetchingData ? student?.studentId : <Skeleton width={50} />}</p>

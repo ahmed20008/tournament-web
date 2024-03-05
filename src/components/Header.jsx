@@ -39,16 +39,6 @@ const Header = () => {
             <p className={styles.welcomeBack}>Welcome back</p>
           )}
         </div>
-        <div className="dropdown">
-          <Image src={userIcon} width={10} height={10} className={`rounded-circle ${styles.navbarAvatarPlaceholder}`} alt="Avatar" data-bs-toggle="dropdown" data-bs-offset="0,10" aria-expanded="false" />
-          <ul className={`dropdown-menu ${styles.headerDropdown}`}>
-            <li>
-              <button className="dropdown-item border-0 bg-transparent" onClick={handleLogout}>
-                Logout
-              </button>
-            </li>
-          </ul>
-        </div>
       </header>
       {loggingOut && <PulseBackdrop />}
     </>
