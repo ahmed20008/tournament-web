@@ -129,7 +129,6 @@ const page = () => {
                   type="text"
                   placeholder="Enter Student Id"
                   value={findStudent.studentId}
-                  onChange={(e) => setFindStudent({ ...findStudent, studentId: e.target.value })}
                   disabled={true}
                 />
               </div>
