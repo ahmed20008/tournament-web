@@ -54,7 +54,7 @@ const page = () => {
         <div className="col-md-8 mx-auto">
           <div className={`card ${styles.addStudentCard}`}>
             <form className="w-75 mx-auto" onSubmit={handleSubmit}>
-              <div className="mt-5 mb-3 mx-4">
+              <div className="mt-5 mb-3">
                 <input
                   required
                   className={`${formStyles.inputFieldWhite}`}
@@ -66,7 +66,7 @@ const page = () => {
                   onChange={(e) => setAddStudent({ ...addStudent, name: e.target.value })}
                 />
               </div>
-              <div className="mt-3 mb-3 mx-4">
+              <div className="mt-3 mb-3">
                 <input
                   required
                   className={`${formStyles.inputFieldWhite}`}
@@ -78,7 +78,7 @@ const page = () => {
                   onChange={(e) => setAddStudent({ ...addStudent, studentId: e.target.value })}
                 />
               </div>
-              <div className="mt-3 mb-3 mx-4">
+              <div className="mt-3 mb-3">
                 <select
                   required
                   className={`${formStyles.customSelectField} w-100 form-select`}
@@ -94,7 +94,7 @@ const page = () => {
                   ))}
                 </select>
               </div>
-              <div className="mt-3 mb-3 mx-4">
+              <div className="mt-3 mb-3">
                 <button type="submit" className={`${buttonStyles.buttonDarkPink} `}>
                   {!loading ? "Add Student" : <CircularProgress width={22} height={22} />}
                 </button>

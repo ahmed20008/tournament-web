@@ -48,6 +48,21 @@ const Page = () => {
       });
   };
 
+  // const finalAverageMarks = () => {
+  //   if (student && student.scores) {
+  //     const allScores = [
+  //       ...student.scores.jumpPlace.map(score => score.score),
+  //       ...student.scores.jumpHeight.map(score => score.score),
+  //       ...student.scores.run.map(score => score.score),
+  //       ...student.scores.setUp.map(score => score.score)
+  //     ];
+
+  //     const average = calculateAverage(allScores);
+  //     return average !== 'N/A' ? calculateMarks(parseFloat(average)) : 'N/A';
+  //   }
+  //   return 'N/A';
+  // };
+
   return (
     <>
       <div className={`${styles.detailPageContainer}`}>
@@ -66,6 +81,11 @@ const Page = () => {
           <h3>{!fetchingData ? student?.name : <Skeleton width={120} />}</h3>
           <p className='mb-1'>Student Id: {!fetchingData ? student?.studentId : <Skeleton width={50} />}</p>
           <p className='mb-1'>Class: {!fetchingData ? student?.class : <Skeleton width={80} />}</p>
+          {/* <div className="col-md-12">
+            <h4 className={`${styles.studentDetailHeading}`}>Final Average Marks</h4>
+            <p className='fw-bold'>{finalAverageMarks()}</p>
+            <hr />
+          </div> */}
           <div className='Line-graph mb-3'>
             {student && (
               <Line
@@ -192,7 +212,7 @@ const Page = () => {
             )}
             <hr />
             <p className='fw-bold'>Average: {student?.scores && calculateAverage(student?.scores.setUp.map(score => score.score))}</p>
-            <p className='fw-bold'>Average: {student?.scores && calculateMarks(calculateAverage(student?.scores.setUp.map(score => score.score)))}</p>
+            <p className='fw-bold'>Marks: {student?.scores && calculateMarks(calculateAverage(student?.scores.setUp.map(score => score.score)))}</p>
             <hr />
           </div>
         </div>
