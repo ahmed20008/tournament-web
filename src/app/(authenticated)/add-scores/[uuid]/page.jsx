@@ -10,6 +10,8 @@ import { enqueueSnackbar } from "notistack";
 import { calculateAverage } from '@/utils/helperMethod';
 import { useRouter } from 'next/navigation';
 import { useParams } from 'next/navigation';
+import Link from 'next/link';
+import { ArrowHeadIcon } from '@/components/IconSVG';
 
 const page = () => {
   const params = useParams();
@@ -110,6 +112,10 @@ const page = () => {
 
   return (
     <div className="container">
+      <Link href={`/dashboard/${id}`} className={`d-flex flex-row align-items-center ${styles.headerGoBack}`}>
+        <ArrowHeadIcon />
+        <p className="px-1 m-0">Go Back</p>
+      </Link>
       <h2 className={styles.pageHeading}>Add Score</h2>
       <div className="row">
         <div className="col-md-8 mx-auto">
