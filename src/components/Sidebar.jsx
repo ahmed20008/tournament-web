@@ -209,8 +209,8 @@ const Sidebar = () => {
                   <span className={`sidebarSpan showSidebarSpan`}>Add Student</span>
                 </Link>
               </li>
-              <li className={`mb-2 ${styles.listItem} ${pathArray[0] === "add-score" ? styles.sidebarActive : ""}`}>
-                <Link className="sidebarLink" href="/add-score">
+              <li className={`mb-2 ${styles.listItem} ${pathArray[0] === "add-scores" ? styles.sidebarActive : ""}`}>
+                <Link className="sidebarLink" href="/add-scores">
                   <div>
                     <svg className={styles.calendarIcon} width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path

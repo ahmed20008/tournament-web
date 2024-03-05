@@ -57,7 +57,7 @@ const Page = () => {
         </Link>
         <h2 className={`${styles.studentDetailMainHeading}`}>Student Score Details</h2>
         <div className='text-end mb-3'>
-          <Link href="/add-scores" aria-disabled="false" className={`${buttonStyles.buttonDarkPinkScore}`} styles={{ height: "20px" }}>Add Score</Link>
+          <Link href={`/add-scores/${student?.studentId}`} aria-disabled="false" className={`${buttonStyles.buttonDarkPinkScore}`} styles={{ height: "20px" }}>Add Score</Link>
         </div>
         <div className="row">
           <h3>{!fetchingData ? student?.name : <Skeleton width={120} />}</h3>
