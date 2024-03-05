@@ -17,10 +17,12 @@ const Page = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedClass, setSelectedClass] = useState('');
   const [selectedScore, setSelectedScore] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [studentsPerPage] = useState(10);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [currentPage]);
 
   const fetchData = async () => {
     setFetchingData(true);
@@ -77,8 +79,17 @@ const Page = () => {
   };
 
   const handleSearch = () => {
+    setCurrentPage(1);
     fetchData();
   };
+
+  // Get current students
+  const indexOfLastStudent = currentPage * studentsPerPage;
+  const indexOfFirstStudent = indexOfLastStudent - studentsPerPage;
+  const currentStudents = students.slice(indexOfFirstStudent, indexOfLastStudent);
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className="col-12 mt-2 d-flex flex-column">
@@ -153,11 +164,11 @@ const Page = () => {
               </tr>
             </thead>
             <tbody>
-              {students.map((student, index) => (
+              {currentStudents.map((student, index) => (
                 <tr className="align-middle" key={student.id}>
                   <td className='text-center'>
                     <Link href={`/dashboard/${student.studentId}`}>
-                      {index + 1}
+                    {(currentPage - 1) * studentsPerPage + index + 1}
                     </Link>
                   </td>
                   <td className='text-center'>
@@ -177,22 +188,22 @@ const Page = () => {
                   </td>
                   <td className='text-center'>
                     <Link href={`/dashboard/${student.studentId}`}>
-                      {getHighestScore(student.scores.jumpPlace) ?? '--'}
+                      {getHighestScore(student.scores.jumpPlace) || '--'}
                     </Link>
                   </td>
                   <td className='text-center'>
                     <Link href={`/dashboard/${student.studentId}`}>
-                      {getHighestScore(student.scores.jumpHeight) ?? '--'}
+                      {getHighestScore(student.scores.jumpHeight) || '--'}
                     </Link>
                   </td>
                   <td className='text-center'>
                     <Link href={`/dashboard/${student.studentId}`}>
-                      {getHighestScore(student.scores.run) ?? '--'}
+                      {getHighestScore(student.scores.run) || '--'}
                     </Link>
                   </td>
                   <td className='text-center'>
                     <Link href={`/dashboard/${student.studentId}`}>
-                      {getHighestScore(student.scores.setUp) ?? '--'}
+                      {getHighestScore(student.scores.setUp) || '--'}
                     </Link>
                   </td>
                   <td className='text-center'>
@@ -208,6 +219,15 @@ const Page = () => {
           {!fetchingData && students.length < 1 && <div className={styles.emptyTable}>There are not any Students to show here yet</div>}
         </div>
       </div>
+      <nav>
+        <ul className="pagination justify-content-start mt-2">
+          {Array.from({ length: Math.ceil(students.length / studentsPerPage) }, (_, i) => (
+            <li key={i} className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}>
+              <button onClick={() => paginate(i + 1)} className="page-link">{i + 1}</button>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </div>
   );
 };
