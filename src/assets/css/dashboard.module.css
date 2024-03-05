@@ -99,9 +99,9 @@
   font-weight: 500;
   font-family: "ABC-Diatype-Medium";
 }
-.viewBtn {
-  color: #7d9559;
-  background-color: #d1e1ba;
+.deleteBtn {
+  color: #fff;
+  background-color: #eb4040ce;
   font-size: 11px;
   font-family: "ABC-Diatype-Medium";
   border: none;
@@ -109,9 +109,9 @@
   border-radius: 20px;
   padding: 8px 25px;
 }
-.viewBtn:hover {
-  color: #8eaa63;
-  background-color: #dae9c4;
+.deleteBtn:hover {
+  color: #fff;
+  background-color: #d85e5e;
 }
 .studentFilterLabel {
   font-size: 14px;

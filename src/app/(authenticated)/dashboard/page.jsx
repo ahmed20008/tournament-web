@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, useEffect } from 'react';
-import { collection, getDocs, query, where, orderBy } from 'firebase/firestore';
+import { collection, getDocs, query, where, orderBy, deleteDoc, doc  } from 'firebase/firestore';
 import { db } from '@/config';
 import styles from "@/assets/css/dashboard.module.css";
 import formStyles from "@/assets/css/form-elements.module.css";
@@ -64,6 +64,15 @@ const Page = () => {
     }
   };
 
+  const handleDelete = async (id) => {
+    try {
+      await deleteDoc(doc(db, "students", id));
+      enqueueSnackbar('Student deleted successfully!', { variant: "success" });
+      fetchData();
+    } catch (error) {
+      enqueueSnackbar(`Error deleting student: ${error}`, { variant: "error" });
+    }
+  };
 
   const handleSearch = () => {
     fetchData();
@@ -153,11 +162,9 @@ const Page = () => {
                   <td className='text-center'>{getHighestScore(student.scores.run) ?? '--'}</td>
                   <td className='text-center'>{getHighestScore(student.scores.setUp) ?? '--'}</td>
                   <td className='text-center'>
-                    <Link href={`/dashboard/${student.studentId}`}>
-                      <button className={`${styles.viewBtn}`}>
-                        View
-                      </button>
-                    </Link>
+                    <button onClick={() => handleDelete(student.id)} className={`${styles.deleteBtn}`}>
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))}
