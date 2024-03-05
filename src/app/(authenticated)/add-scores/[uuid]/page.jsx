@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import formStyles from "@/assets/css/form-elements.module.css";
 import styles from "@/assets/css/add-student.module.css";
 import buttonStyles from "@/assets/css/buttons.module.css?v1.1";
@@ -18,28 +18,27 @@ const page = () => {
 
   const [loading, setLoading] = useState(false);
   const [student, setStudent] = useState([]);
-  const [findStudent, setFindStudent] = useState([]);
+  const [findStudent, setFindStudent] = useState({ studentId: params.uuid });
   const [selectedSport, setSelectedSport] = useState('');
   const [scoreValues, setScoreValues] = useState([]);
   const [timeValues, setTimeValues] = useState([]);
-  const [check, setCheck] = useState(true);
   const router = useRouter();
 
-  const id = params.uuid;
+  useEffect(() => {
+    if (params.uuid) {
+      handleStudent(params.uuid);
+    }
+  }, [params.uuid]);
 
-  console.log(id);
-
-  const handleStudent = async (e) => {
-    e.preventDefault();
+  const handleStudent = async (studentId) => {
     setLoading(true);
     try {
-      const studentQuery = query(collection(db, 'students'), where('studentId', '==', findStudent.studentId));
+      const studentQuery = query(collection(db, 'students'), where('studentId', '==', studentId));
       const studentQuerySnapshot = await getDocs(studentQuery);
       if (!studentQuerySnapshot.empty) {
         const studentDocSnapshot = studentQuerySnapshot.docs[0];
         const studentData = { id: studentDocSnapshot.id, ...studentDocSnapshot.data() };
         setLoading(false);
-        setCheck(false);
         setStudent(studentData);
         setSelectedSport('');
         setScoreValues([]);
@@ -112,7 +111,7 @@ const page = () => {
 
   return (
     <div className="container">
-      <Link href={`/dashboard/${id}`} className={`d-flex flex-row align-items-center ${styles.headerGoBack}`}>
+      <Link href={`/dashboard/${params.uuid}`} className={`d-flex flex-row align-items-center ${styles.headerGoBack}`}>
         <ArrowHeadIcon />
         <p className="px-1 m-0">Go Back</p>
       </Link>
@@ -130,17 +129,9 @@ const page = () => {
                   type="text"
                   placeholder="Enter Student Id"
                   value={findStudent.studentId}
-                  onChange={(e) => setFindStudent({ ...findStudent, studentId: e.target.value })}
-                  disabled={!check}
+                  disabled={true}
                 />
               </div>
-              {(check) &&
-                <div className="mt-3 mb-3 mx-4">
-                  <button type="submit" className={`${buttonStyles.buttonDarkPink} `}>
-                    {!loading ? "Find Student" : <CircularProgress width={22} height={22} />}
-                  </button>
-                </div>
-              }
             </form>
             <form className="w-75 mx-auto" onSubmit={handleSubmit}>
               <div className="mt-2 mb-3 mx-4">
@@ -149,7 +140,6 @@ const page = () => {
                   className={`${formStyles.customSelectField} w-100 form-select`}
                   value={selectedSport}
                   onChange={(e) => handleSportChange(e.target.value)}
-                  disabled={check}
                 >
                   <option value="">Select Sport</option>
                   <option value="jumpHeight">Jump from Height</option>
@@ -160,7 +150,6 @@ const page = () => {
               </div>
               {selectedSport && (
                 <div className='mb-3 mx-4'>
-                  {/* <h5 className={`${styles.sportHeading}`}>{selectedSport}</h5> */}
                   {scoreValues.map((value, index) => (
                     <>
                       <label htmlFor="scores" className="form-label px-1">
@@ -200,13 +189,11 @@ const page = () => {
                   <p>Automatic Grade: {calculateAverage(scoreValues)}</p>
                 </div>
               )}
-              {(!check) &&
-                <div className="mt-3 mb-3 mx-4">
-                  <button type="submit" className={`${buttonStyles.buttonDarkPink} `}>
-                    {!loading ? "Add Score" : <CircularProgress width={22} height={22} />}
-                  </button>
-                </div>
-              }
+              <div className="mt-3 mb-3 mx-4">
+                <button type="submit" className={`${buttonStyles.buttonDarkPink} `}>
+                  {!loading ? "Add Score" : <CircularProgress width={22} height={22} />}
+                </button>
+              </div>
             </form>
           </div>
         </div>
