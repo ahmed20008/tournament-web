@@ -28,11 +28,11 @@ const Header = () => {
     <>
       <header className={styles.headerContainer}>
         <div>
-          <button data-pinned="true" className={styles.sidenavToggler} id="sidebarPinButton">
+          <button data-pinned="false" className={styles.sidenavToggler} id="sidebarPinButton">
             <div className={styles.sidenavTogglerInner}>
-              <i className={`${styles.sidenavTogglerLine} sidebarPinButtonIcon sidenavIconPinned`}></i>
+              <i className={`${styles.sidenavTogglerLine} sidebarPinButtonIcon`}></i>
               <i className={styles.sidenavTogglerLine}></i>
-              <i className={`${styles.sidenavTogglerLine} sidebarPinButtonIcon sidenavIconPinned`}></i>
+              <i className={`${styles.sidenavTogglerLine} sidebarPinButtonIcon`}></i>
             </div>
           </button>
           {pathname === "/dashboard" && (

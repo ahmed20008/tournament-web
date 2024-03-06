@@ -9,7 +9,7 @@ export default async function AuthenticatedLayout({ children }) {
 
   return (
     <SnackbarProvider>
-      <div id="authenticatedLayoutMain" className="layoutPinned">
+      <div id="authenticatedLayoutMain" className="layoutUnpinned">
         <Sidebar />
         <div className={styles.mainContentContainer}>
           <Header />

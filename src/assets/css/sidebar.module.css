@@ -178,9 +178,6 @@
 }
 
 @media (max-width: 1199px) {
-  .sidebarContainer {
-    border-radius: 0px 35px 0px 0px;
-  }
   .sidebarContentPinned {
     width: 100vw;
     height: 100vh;

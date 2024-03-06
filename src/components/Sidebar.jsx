@@ -72,7 +72,7 @@ const Sidebar = () => {
     const sidebarSpan = document.querySelectorAll(".sidebarSpan");
 
     if (sidebarPinButton.getAttribute("data-pinned") === "false" && window.innerWidth > 1199) {
-      sidebarLinksContainer.classList.remove("unpinContainer");
+      sidebarLinksContainer.classList.remove("unpinContainerpinContainer");
       sidebarLinksContainer.classList.add("pinContainer");
       sidebarLogo.classList.remove("hideSidebarImage");
       sidebarSpan.forEach((element) => {
@@ -144,7 +144,6 @@ const Sidebar = () => {
     };
   }, [handleClickOutsideSidebar, handleLinkCLick]);
 
-
   const handleLogout = async () => {
     setLoggingOut(true);
     signOut(auth)
@@ -166,8 +165,8 @@ const Sidebar = () => {
 
   return (
     <>
-      <div id="sidebarParentContainer" className={`${styles.sidebarContent} sidebarContentPinned`}>
-        <div id="sidebarLinksContainer" className={`${styles.sidebarContainer} ${styles.sidebarScrollBar} pinContainer`}>
+      <div id="sidebarParentContainer" className={`${styles.sidebarContent} sidebarContentUnpinned`}>
+        <div id="sidebarLinksContainer" className={`${styles.sidebarContainer} ${styles.sidebarScrollBar} unpinContainer`}>
           <nav>
             <ul className={styles.listContainer}>
               <li className={styles.listItemLogo}>
@@ -189,43 +188,9 @@ const Sidebar = () => {
                       <path d="M12 15L12 18" stroke="#1C274C" strokeWidth="2" strokeLinecap="round" />
                     </svg>
                   </div>
-                  <span className={` sidebarSpan showSidebarSpan`}>Dashboard</span>
+                  <span className={` sidebarSpan hideSidebarSpan`}>Dashboard</span>
                 </Link>
               </li>
-              {/* <li className={`mb-2 ${styles.listItem} ${pathArray[0] === "add-student" ? styles.sidebarActive : ""}`}>
-                <Link className="sidebarLink" href="/add-student">
-                  <div>
-                    <svg className={styles.userIcon} width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <circle cx={9} cy={6} r={4} stroke="#1C274C" strokeWidth="2" />
-                      <path d="M15 9C16.6569 9 18 7.65685 18 6C18 4.34315 16.6569 3 15 3" stroke="#1C274C" strokeWidth="2" strokeLinecap="round" />
-                      <path
-                        d="M5.88915 20.5843C6.82627 20.8504 7.88256 21 9 21C12.866 21 16 19.2091 16 17C16 14.7909 12.866 13 9 13C5.13401 13 2 14.7909 2 17C2 17.3453 2.07657 17.6804 2.22053 18"
-                        stroke="#1C274C"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                      />
-                      <path d="M18 14C19.7542 14.3847 21 15.3589 21 16.5C21 17.5293 19.9863 18.4229 18.5 18.8704" stroke="#1C274C" strokeWidth="2" strokeLinecap="round" />
-                    </svg>
-                  </div>
-                  <span className={`sidebarSpan showSidebarSpan`}>Add Student</span>
-                </Link>
-              </li>
-              <li className={`mb-2 ${styles.listItem} ${pathArray[0] === "add-scores" ? styles.sidebarActive : ""}`}>
-                <Link className="sidebarLink" href="/add-scores">
-                  <div>
-                    <svg className={styles.calendarIcon} width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path
-                        d="M3 10H21M7 3V5M17 3V5M6.2 21H17.8C18.9201 21 19.4802 21 19.908 20.782C20.2843 20.5903 20.5903 20.2843 20.782 19.908C21 19.4802 21 18.9201 21 17.8V8.2C21 7.07989 21 6.51984 20.782 6.09202C20.5903 5.71569 20.2843 5.40973 19.908 5.21799C19.4802 5 18.9201 5 17.8 5H6.2C5.0799 5 4.51984 5 4.09202 5.21799C3.71569 5.40973 3.40973 5.71569 3.21799 6.09202C3 6.51984 3 7.07989 3 8.2V17.8C3 18.9201 3 19.4802 3.21799 19.908C3.40973 20.2843 3.71569 20.5903 4.09202 20.782C4.51984 21 5.07989 21 6.2 21Z"
-                        stroke="#000000"
-                        strokeWidth={2}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </div>
-                  <span className={` sidebarSpan showSidebarSpan`}>Add Score</span>
-                </Link>
-              </li> */}
               <div className="mb-2">
                 <li className={`${styles.listItem} ${pathArray[0] === "members" || pathArray[0] === "non-members" ? styles.sidebarActive : ""}`}>
                   <button className={`${styles.customaccordion} ${isActive ? styles.active : ""}`} onClick={handleAccordionClick}>
@@ -242,7 +207,7 @@ const Sidebar = () => {
                         <path d="M18 14C19.7542 14.3847 21 15.3589 21 16.5C21 17.5293 19.9863 18.4229 18.5 18.8704" stroke="#1C274C" strokeWidth="2" strokeLinecap="round" />
                       </svg>
                     </div>
-                    <span className={`sidebarSpan showSidebarSpan`}>Students</span>
+                    <span className={`sidebarSpan hideSidebarSpan`}>Students</span>
                   </button>
                 </li>
                 <div ref={accordionBodyRef} className={`${styles.accordionBody}`}>
@@ -265,7 +230,7 @@ const Sidebar = () => {
                       <path d="M14 4L17.5 4C20.5577 4 20.5 8 20.5 12C20.5 16 20.5577 20 17.5 20H14M3 12L15 12M3 12L7 8M3 12L7 16" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </div>
-                  <span className={`sidebarSpan showSidebarSpan`}>Logout</span>
+                  <span className={`sidebarSpan hideSidebarSpan`}>Logout</span>
                 </button>
               </li>
             </ul>
