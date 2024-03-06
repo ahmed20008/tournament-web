@@ -36,12 +36,15 @@ const Page = () => {
 
       // filter by student class 
       if (selectedClass !== "") {
-        q = query(studentsRef, orderBy('name'), where('class', '==', selectedClass));
+        if (searchTerm.trim() !== "") {
+          q = query(studentsRef, where('studentId', '==', searchTerm), where('class', '==', selectedClass));
+        } else {
+          q = query(studentsRef, orderBy('name'), where('class', '==', selectedClass));
+        }
       }
 
       const querySnapshot = await getDocs(q);
       const studentData = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      // setStudents(studentData);
 
       //  filter by highest score code  
       if (selectedScore !== "") {
