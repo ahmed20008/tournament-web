@@ -47,6 +47,42 @@ const Page = () => {
       });
   };
 
+  const getFinalAverage = () => {
+    const averages = [
+      student?.scores && calculateAverage(student?.scores.jumpPlace.map(score => score.score)),
+      student?.scores && calculateAverage(student?.scores.jumpHeight.map(score => score.score)),
+      student?.scores && calculateAverage(student?.scores.run.map(score => score.score)),
+      student?.scores && calculateAverage(student?.scores.setUp.map(score => score.score)),
+    ];
+
+    const validAverages = averages
+      .map(avg => parseFloat(avg))
+      .filter(avg => !isNaN(avg));
+
+    if (validAverages.length > 0) {
+      const sum = validAverages.reduce((total, avg) => total + avg, 0);
+      return sum / validAverages.length;
+    } else {
+      return null;
+    }
+  };
+
+  const finalAverage = getFinalAverage();
+
+  const getBorderColor = (finalAverage) => {
+    if (finalAverage > 0 && finalAverage <= 25) {
+      return "border border-2 border-danger";
+    } else if (finalAverage > 25 && finalAverage <= 50) {
+      return "border border-2 border-warning";
+    } else if (finalAverage > 50 && finalAverage <= 75) {
+      return "border border-2 border-info";
+    } else if (finalAverage > 75 && finalAverage <= 100) {
+      return "border border-2 border-success";
+    } else {
+      "border border-2 border-dark"
+    }
+  };
+
   return (
     <>
       <div className={`${styles.detailPageContainer}`}>
@@ -60,6 +96,14 @@ const Page = () => {
           <h3>{!fetchingData ? student?.name : <Skeleton width={120} />}</h3>
           <p>Student Id: {!fetchingData ? student?.studentId : <Skeleton width={50} />}</p>
           <p>Class: {!fetchingData ? student?.class : <Skeleton width={80} />}</p>
+          <div className="col-md-12 my-3">
+            <div className="d-flex justify-content-center align-items-center">
+              <div className={`card px-3 py-2 ${getBorderColor(finalAverage)}`}>
+                <h4 className={`${styles.studentDetailHeading}`}>Final Average Marks</h4>
+                <p className='fw-bold mb-0'>Final average: {finalAverage ? finalAverage?.toFixed(2) : 'N/A'}</p>
+              </div>
+            </div>
+          </div>
           <div className='Line-graph mb-3'>
             {student && student?.scores && (
               <Line

@@ -71,14 +71,16 @@ const Page = () => {
   const finalAverage = getFinalAverage();
 
   const getBorderColor = (finalAverage) => {
-    if (finalAverage <= 25) {
+    if (finalAverage > 0 && finalAverage <= 25) {
       return "border border-2 border-danger";
     } else if (finalAverage > 25 && finalAverage <= 50) {
-      return "border border-2 border-warning"; 
+      return "border border-2 border-warning";
     } else if (finalAverage > 50 && finalAverage <= 75) {
       return "border border-2 border-info";
     } else if (finalAverage > 75 && finalAverage <= 100) {
       return "border border-2 border-success";
+    } else {
+      "border border-2 border-dark"
     }
   };
 
